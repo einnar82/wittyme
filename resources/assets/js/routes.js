@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from './components/layouts/Home.vue'
+import Index from './components/users/Index.vue'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    component: Home
-  }
+    component: Index
+  },
+  
 ]
 
 export default new VueRouter({

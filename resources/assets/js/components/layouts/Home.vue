@@ -12,7 +12,7 @@
       </v-toolbar>
       <v-divider></v-divider>
       <v-list dense class="pt-0">
-        <v-list-tile v-for="item in items" :key="item.title" @click="">
+        <v-list-tile v-for="item in items" :key="item.title" :to="item.route">
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
@@ -22,23 +22,18 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar color="indigo" dark fixed app>
+    <v-toolbar color="blue darken-2" dark fixed app>
       <v-toolbar-side-icon class="hidden-md-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>WittyMe</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat>Home</v-btn>
-        <v-btn flat>About</v-btn>
-        <v-btn flat>Contact Us</v-btn>
-        <v-btn flat>Register</v-btn>
+        <v-btn flat v-for="item in items" :key="item.title" :to="item.route">{{item.title}}</v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-content>
-      <v-container fluid fill-height>
         <router-view></router-view>
-      </v-container>
     </v-content>
-    <v-footer color="indigo" app>
+    <v-footer color="blue darken-2" app>
       <span class="white--text text-center">All Rights Reserved &copy; 2017</span>
     </v-footer>
   </v-app>
@@ -51,10 +46,10 @@ export default {
     return {
       drawer: null,
       items: [
-          { title: 'Home', icon: 'dashboard' },
-          { title: 'About', icon: 'question_answer' },
-          { title: 'Contact Us', icon: 'perm_contact_calendar' },
-          { title: 'Register', icon: 'add_circle_outline' }
+          { title: 'Home', icon: 'dashboard', route: '/' },
+          { title: 'About', icon: 'question_answer', route: '/about' },
+          { title: 'Contact Us', icon: 'perm_contact_calendar', route: '/contactus' },
+          { title: 'Login', icon: 'add_circle_outline', route: '/register' }
       ]
     }
   }
