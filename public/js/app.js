@@ -62501,7 +62501,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-container",
-    { attrs: { fluid: "", "fill-height": "" } },
+    { staticClass: "svg-2", attrs: { fluid: "true", "fill-height": "" } },
     [
       _c(
         "v-layout",
