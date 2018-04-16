@@ -47,15 +47,15 @@ export default {
       drawer: null,
       items: [
           { title: 'Home', icon: 'dashboard', route: '/' },
-          { title: 'About', icon: 'question_answer', route: '/about' },
-          { title: 'Contact Us', icon: 'perm_contact_calendar', route: '/contactus' },
-          { title: 'Login', icon: 'add_circle_outline', route: '/register' }
+          { title: 'Login', icon: 'add_circle_outline', route: '/login' }
       ]
     }
   }
 }
 </script>
 
-<style>
-
+<style scoped lang="scss">
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
 </style>
