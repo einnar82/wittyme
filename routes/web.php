@@ -15,3 +15,8 @@ Route::get('/', [
   'uses' => 'HomeController@home',
   'as' => 'home' 
 ]);
+
+Route::get('/login', [ 
+  'uses' => 'HomeController@home',
+  'as' => 'login' 
+]);
