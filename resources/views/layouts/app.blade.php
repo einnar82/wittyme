@@ -11,8 +11,8 @@
 </head>
 <body>
   <div id="app">
-    <home></home>
+    @yield('home')
   </div>
 </body>
-<script async defer src="{{URL::to('js/app.js')}}"></script>
+  @yield('scripts')
 </html>
