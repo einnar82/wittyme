@@ -12,6 +12,8 @@
     "devDependencies": {
         "axios": "^0.18",
         "cross-env": "^5.1",
+        "imagemin-mozjpeg": "^7.0.0",
+        "imagemin-webpack-plugin": "^2.1.1",
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4"
     },
