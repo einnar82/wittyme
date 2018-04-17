@@ -20,3 +20,8 @@ Route::get('/login', [
   'uses' => 'HomeController@home',
   'as' => 'login' 
 ]);
+
+Route::get('/dashboard', [ 
+  'uses' => 'HomeController@home',
+  'as' => 'dashboard' 
+]);
