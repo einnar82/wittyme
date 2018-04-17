@@ -62704,6 +62704,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Dashboard'
@@ -62745,7 +62775,7 @@ exports = module.exports = __webpack_require__(51)(false);
 
 
 // module
-exports.push([module.i, "\n.categories[data-v-e1b63cfa] {\n  width: 300px;\n  margin: 0 auto;\n  padding: 10px;\n  background-color: #544f7b;\n}\n.photoword[data-v-e1b63cfa] {\n  background: url(/images/photo.png) no-repeat;\n  height: 250px;\n  background-size: contain;\n}\n", ""]);
+exports.push([module.i, "\n.categories[data-v-e1b63cfa] {\n  width: 300px;\n  margin: 0 auto;\n  padding: 10px;\n  background-color: #544f7b;\n}\n.photoword[data-v-e1b63cfa] {\n  background: url(/images/photo.png) no-repeat;\n  height: 250px;\n  background-size: contain;\n}\n.nymrush[data-v-e1b63cfa] {\n  background: url(/images/nym.jpg) no-repeat;\n  height: 250px;\n  background-size: contain;\n}\n.fixitup[data-v-e1b63cfa] {\n  background: url(/images/fix.jpg) no-repeat;\n  height: 250px;\n  background-size: contain;\n}\n@media all and (max-width: 959px) {\n.btn-start[data-v-e1b63cfa] {\n    margin: 0 auto;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    margin-bottom: 10px;\n}\n}\n", ""]);
 
 // exports
 
@@ -62901,7 +62931,7 @@ var render = function() {
                             "p",
                             {
                               staticClass:
-                                "text-xs-center text-sm-center text-md-left text-lg-left text-xl-left display-2 mt-5"
+                                "text-xs-center text-sm-center text-md-left text-lg-left text-xl-left display-2 mt-4"
                             },
                             [_vm._v("Photoword")]
                           ),
@@ -62910,7 +62940,7 @@ var render = function() {
                             "p",
                             {
                               staticClass:
-                                "text-xs-center text-sm-center text-md-left text-lg-left text-xl-left headline mt-5"
+                                "text-xs-center text-sm-center text-md-left text-lg-left text-xl-left headline mt-4"
                             },
                             [
                               _vm._v(
@@ -62921,7 +62951,171 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "v-btn",
-                            { attrs: { large: "", color: "primary" } },
+                            {
+                              attrs: { large: "", color: "primary btn-start" }
+                            },
+                            [_vm._v("Start")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        { attrs: { fluid: "true" } },
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  staticClass: "elevation-4 pa-1",
+                  attrs: { xs12: "", sm12: "", md12: "", lg12: "", xl12: "" }
+                },
+                [
+                  _c(
+                    "v-layout",
+                    { attrs: { row: "", wrap: "" } },
+                    [
+                      _c("v-flex", {
+                        staticClass: "nymrush hidden-sm-and-down",
+                        attrs: { md4: "", lg4: "", xl4: "" }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        {
+                          attrs: {
+                            s12: "",
+                            sm12: "",
+                            md8: "",
+                            lg8: "",
+                            xl8: ""
+                          }
+                        },
+                        [
+                          _c(
+                            "p",
+                            {
+                              staticClass:
+                                "text-xs-center text-sm-center text-md-left text-lg-left text-xl-left display-2 mt-4"
+                            },
+                            [_vm._v("-Nym Rush")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "p",
+                            {
+                              staticClass:
+                                "text-xs-center text-sm-center text-md-left text-lg-left text-xl-left headline mt-4"
+                            },
+                            [
+                              _vm._v(
+                                "Expand your vocabulary by\r\n              supplying the correct antonym or synonym of the given word."
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { large: "", color: "primary btn-start" }
+                            },
+                            [_vm._v("Start")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        { attrs: { fluid: "true" } },
+        [
+          _c(
+            "v-layout",
+            { attrs: { row: "", wrap: "" } },
+            [
+              _c(
+                "v-flex",
+                {
+                  staticClass: "elevation-4 pa-1",
+                  attrs: { xs12: "", sm12: "", md12: "", lg12: "", xl12: "" }
+                },
+                [
+                  _c(
+                    "v-layout",
+                    { attrs: { row: "", wrap: "" } },
+                    [
+                      _c("v-flex", {
+                        staticClass: "fixitup hidden-sm-and-down",
+                        attrs: { md4: "", lg4: "", xl4: "" }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "v-flex",
+                        {
+                          attrs: {
+                            s12: "",
+                            sm12: "",
+                            md8: "",
+                            lg8: "",
+                            xl8: ""
+                          }
+                        },
+                        [
+                          _c(
+                            "p",
+                            {
+                              staticClass:
+                                "text-xs-center text-sm-center text-md-left text-lg-left text-xl-left display-2 mt-4"
+                            },
+                            [_vm._v("FixItUp")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "p",
+                            {
+                              staticClass:
+                                "text-xs-center text-sm-center text-md-left text-lg-left text-xl-left headline mt-4"
+                            },
+                            [
+                              _vm._v(
+                                "Remember the correct sentence structure\r\n              by arranging the jumbled sentences."
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { large: "", color: "primary btn-start" }
+                            },
                             [_vm._v("Start")]
                           )
                         ],
