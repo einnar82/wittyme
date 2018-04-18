@@ -1,7 +1,7 @@
 <template>
   <v-container fluid=true>
     <v-layout row wrap>
-      <v-flex xs12 sm12 md6 lg6 xl6>
+      <v-flex xs12 sm12 md4 lg4 xl4 class="elevation-6 pa-3">
         <p class="headline text-xs-center text-sm-center text-md-center text-lg-center text-xl-center">
           Add your questions:
         </p>
@@ -27,7 +27,18 @@
         <v-text-field name="answer"
                       label="Answer"
                       v-model="correct"/>
-      </v-flex>
+          <div class="text-xs-center">          
+            <v-btn  color="info"
+                    :loading="loading"
+                    @click.native="loader = 'loading'"
+                    :disabled="loading">
+              Save Question
+              <span slot="loader" class="custom-loader">
+                <v-icon light>cached</v-icon>
+              </span>
+              </v-btn>
+          </div>
+      </v-flex> 
     </v-layout>
   </v-container>
 </template>
@@ -47,14 +58,41 @@ export default {
         get () { 
           return this.$store.state.photoword.correct; 
         },
-        set(value) {
+        set (value) {
           this.$store.state.photoword.correct = value
         }
     },
+    loading: {
+      get () {
+         return this.$store.state.photoword.loading;
+      },
+      set (value) {
+        this.$store.state.photoword.loading = value
+      }
+     
+    },
+    loader: {
+      get () {
+        return this.$store.state.photoword.loader;
+      },
+      set (value) {
+        this.$store.state.photoword.loader = value
+      }
+    }
   },
   methods: {
     fileSelectedFunc(e) {
       this.$store.state.photoword.fileName = e.name;
+    }
+  },
+  watch: {
+    loader () {
+        const l = this.loader
+        this[l] = !this[l]
+
+        setTimeout(() => (this[l] = false), 3000)
+
+        this.loader = null
     }
   },
   components: {
@@ -64,5 +102,40 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+  .custom-loader {
+    animation: loader 1s infinite;
+    display: flex;
+  }
+  @-moz-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 </style>

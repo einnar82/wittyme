@@ -70779,7 +70779,7 @@ exports = module.exports = __webpack_require__(22)(false);
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.custom-loader[data-v-7177dd44] {\n  -webkit-animation: loader-data-v-7177dd44 1s infinite;\n          animation: loader-data-v-7177dd44 1s infinite;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n@-webkit-keyframes loader-data-v-7177dd44 {\nfrom {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes loader-data-v-7177dd44 {\nfrom {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n", ""]);
 
 // exports
 
@@ -70792,6 +70792,17 @@ exports.push([module.i, "", ""]);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_UploadButton__ = __webpack_require__(425);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_UploadButton___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ui_UploadButton__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -70845,11 +70856,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       set: function set(value) {
         this.$store.state.photoword.correct = value;
       }
+    },
+    loading: {
+      get: function get() {
+        return this.$store.state.photoword.loading;
+      },
+      set: function set(value) {
+        this.$store.state.photoword.loading = value;
+      }
+    },
+    loader: {
+      get: function get() {
+        return this.$store.state.photoword.loader;
+      },
+      set: function set(value) {
+        this.$store.state.photoword.loader = value;
+      }
     }
   },
   methods: {
     fileSelectedFunc: function fileSelectedFunc(e) {
       this.$store.state.photoword.fileName = e.name;
+    }
+  },
+  watch: {
+    loader: function loader() {
+      var _this = this;
+
+      var l = this.loader;
+      this[l] = !this[l];
+
+      setTimeout(function () {
+        return _this[l] = false;
+      }, 3000);
+
+      this.loader = null;
     }
   },
   components: {
@@ -71023,7 +71064,10 @@ var render = function() {
         [
           _c(
             "v-flex",
-            { attrs: { xs12: "", sm12: "", md6: "", lg6: "", xl6: "" } },
+            {
+              staticClass: "elevation-6 pa-3",
+              attrs: { xs12: "", sm12: "", md4: "", lg4: "", xl4: "" }
+            },
             [
               _c(
                 "p",
@@ -71094,7 +71138,47 @@ var render = function() {
                   },
                   expression: "correct"
                 }
-              })
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "text-xs-center" },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: {
+                        color: "info",
+                        loading: _vm.loading,
+                        disabled: _vm.loading
+                      },
+                      nativeOn: {
+                        click: function($event) {
+                          _vm.loader = "loading"
+                        }
+                      }
+                    },
+                    [
+                      _vm._v("\n            Save Question\n            "),
+                      _c(
+                        "span",
+                        {
+                          staticClass: "custom-loader",
+                          attrs: { slot: "loader" },
+                          slot: "loader"
+                        },
+                        [
+                          _c("v-icon", { attrs: { light: "" } }, [
+                            _vm._v("cached")
+                          ])
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
             ],
             2
           )
@@ -96934,14 +97018,12 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
       answer2: '',
       answer3: '',
       correct: '',
+      loading: false,
+      loader: null,
       choices: [{ no: 1, textNode: '' }, { no: 2, textNode: '' }, { no: 3, textNode: '' }]
     }
   },
-  mutations: {
-    setCorrect: function setCorrect(state) {
-      return state.photoword.correct;
-    }
-  }
+  mutations: {}
 });
 
 /***/ })
