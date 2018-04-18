@@ -70837,10 +70837,66 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PhotowordReview',
+  data: function data() {
+    return {
+      search: '',
+      headers: [{
+        text: 'Image',
+        align: 'left',
+        sortable: false,
+        value: 'image'
+      }, { text: 'Choice 1', value: 'choice1' }, { text: 'Choice 2', value: 'choice2' }, { text: 'Choice 3', value: 'choice3' }, { text: 'Answer', value: 'answer' }],
+      items: [{
+        value: false,
+        name: 'Frozen Yogurt',
+        calories: 159,
+        fat: 6.0,
+        carbs: 24,
+        protein: 4.0
+      }]
+    };
+  },
+
   computed: {
     fileName: function fileName() {
       return this.$store.state.photoword.fileName;
@@ -70888,7 +70944,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       setTimeout(function () {
         return _this[l] = false;
-      }, 3000);
+      }, 2000);
 
       this.loader = null;
     }
@@ -71056,7 +71112,9 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-container",
-    { attrs: { fluid: "true" } },
+    {
+      attrs: { fluid: "true", "grid-list-{xs": "", through: "", "xl}": "true" }
+    },
     [
       _c(
         "v-layout",
@@ -71065,7 +71123,7 @@ var render = function() {
           _c(
             "v-flex",
             {
-              staticClass: "elevation-6 pa-3",
+              staticClass: "elevation-6 pa-3 mb-3",
               attrs: { xs12: "", sm12: "", md4: "", lg4: "", xl4: "" }
             },
             [
@@ -71181,6 +71239,119 @@ var render = function() {
               )
             ],
             2
+          ),
+          _vm._v(" "),
+          _c("v-flex", {
+            attrs: { "hidden-sm-and-down": "", md1: "", lg1: "", xl1: "" }
+          }),
+          _vm._v(" "),
+          _c(
+            "v-flex",
+            {
+              staticClass: "mb-3",
+              attrs: { xs12: "", sm12: "", md7: "", lg7: "", xl7: "" }
+            },
+            [
+              _c(
+                "v-flex",
+                { attrs: { xs12: "", sm12: "", md12: "", lg12: "", xl12: "" } },
+                [
+                  _c(
+                    "v-card",
+                    [
+                      _c(
+                        "v-card-title",
+                        [
+                          _vm._v(
+                            "\n               List of Questions\n            "
+                          ),
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "append-icon": "search",
+                              label: "Search",
+                              "single-line": "",
+                              "hide-details": ""
+                            },
+                            model: {
+                              value: _vm.search,
+                              callback: function($$v) {
+                                _vm.search = $$v
+                              },
+                              expression: "search"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-data-table",
+                        {
+                          attrs: {
+                            headers: _vm.headers,
+                            items: _vm.items,
+                            search: _vm.search
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "items",
+                              fn: function(props) {
+                                return [
+                                  _c("td", [_vm._v(_vm._s(props.item.name))]),
+                                  _vm._v(" "),
+                                  _c("td", { staticClass: "text-xs-right" }, [
+                                    _vm._v(_vm._s(props.item.calories))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", { staticClass: "text-xs-right" }, [
+                                    _vm._v(_vm._s(props.item.fat))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", { staticClass: "text-xs-right" }, [
+                                    _vm._v(_vm._s(props.item.carbs))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", { staticClass: "text-xs-right" }, [
+                                    _vm._v(_vm._s(props.item.protein))
+                                  ])
+                                ]
+                              }
+                            }
+                          ])
+                        },
+                        [
+                          _c(
+                            "v-alert",
+                            {
+                              attrs: {
+                                slot: "no-results",
+                                value: true,
+                                color: "error",
+                                icon: "warning"
+                              },
+                              slot: "no-results"
+                            },
+                            [
+                              _vm._v(
+                                '\n              Your search for "' +
+                                  _vm._s(_vm.search) +
+                                  '" found no results.\n            '
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
           )
         ],
         1
