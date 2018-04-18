@@ -46,7 +46,7 @@
         <v-flex xs12 sm12 md12 lg12 xl12>
             <v-card>
               <v-card-title>
-                 List of Questions
+                 <p class="headline">List of Questions</p>
               <v-spacer></v-spacer>
               <v-text-field
                 append-icon="search"
@@ -67,6 +67,14 @@
                 <td class="text-xs-right">{{ props.item.fat }}</td>
                 <td class="text-xs-right">{{ props.item.carbs }}</td>
                 <td class="text-xs-right">{{ props.item.protein }}</td>
+                <td class="justify-center layout px-0">
+                  <v-btn icon class="mx-0" @click="editItem(props.item)">
+                    <v-icon color="teal">edit</v-icon>
+                  </v-btn>
+                  <v-btn icon class="mx-0" @click="deleteItem(props.item)">
+                    <v-icon color="pink">delete</v-icon>
+                  </v-btn>
+                </td>
               </template>
               <v-alert slot="no-results" :value="true" color="error" icon="warning">
                 Your search for "{{ search }}" found no results.
@@ -97,6 +105,7 @@ export default {
           { text: 'Choice 2', value: 'choice2' },
           { text: 'Choice 3', value: 'choice3' },
           { text: 'Answer', value: 'answer' },
+          { text: 'Actions', value: 'actions', sortable: false },
         ],
         items: [
           {
@@ -145,6 +154,12 @@ export default {
   methods: {
     fileSelectedFunc(e) {
       this.$store.state.photoword.fileName = e.name;
+    },
+    editItem(item) {
+
+    },
+    deleteItem(item) {
+
     }
   },
   watch: {

@@ -65351,6 +65351,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -65363,7 +65371,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         align: 'left',
         sortable: false,
         value: 'image'
-      }, { text: 'Choice 1', value: 'choice1' }, { text: 'Choice 2', value: 'choice2' }, { text: 'Choice 3', value: 'choice3' }, { text: 'Answer', value: 'answer' }],
+      }, { text: 'Choice 1', value: 'choice1' }, { text: 'Choice 2', value: 'choice2' }, { text: 'Choice 3', value: 'choice3' }, { text: 'Answer', value: 'answer' }, { text: 'Actions', value: 'actions', sortable: false }],
       items: [{
         value: false,
         name: 'Frozen Yogurt',
@@ -65411,7 +65419,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     fileSelectedFunc: function fileSelectedFunc(e) {
       this.$store.state.photoword.fileName = e.name;
-    }
+    },
+    editItem: function editItem(item) {},
+    deleteItem: function deleteItem(item) {}
   },
   watch: {
     loader: function loader() {
@@ -65740,9 +65750,10 @@ var render = function() {
                       _c(
                         "v-card-title",
                         [
-                          _vm._v(
-                            "\n               List of Questions\n            "
-                          ),
+                          _c("p", { staticClass: "headline" }, [
+                            _vm._v("List of Questions")
+                          ]),
+                          _vm._v(" "),
                           _c("v-spacer"),
                           _vm._v(" "),
                           _c("v-text-field", {
@@ -65793,7 +65804,58 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("td", { staticClass: "text-xs-right" }, [
                                     _vm._v(_vm._s(props.item.protein))
-                                  ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "td",
+                                    {
+                                      staticClass: "justify-center layout px-0"
+                                    },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          staticClass: "mx-0",
+                                          attrs: { icon: "" },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.editItem(props.item)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { color: "teal" } },
+                                            [_vm._v("edit")]
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          staticClass: "mx-0",
+                                          attrs: { icon: "" },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.deleteItem(props.item)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { color: "pink" } },
+                                            [_vm._v("delete")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
                                 ]
                               }
                             }
