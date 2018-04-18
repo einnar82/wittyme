@@ -2,10 +2,12 @@ window.Vue = require('vue')
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
+import VueSwal from 'vue-swal'
 import 'vuetify/dist/vuetify.min.css' 
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(Vuetify)
+Vue.use(VueSwal)
 
 
 window._ = require('lodash');
