@@ -14,6 +14,7 @@ const ImageminPlugin = require("imagemin-webpack-plugin").default;
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
+    .js('resources/assets/js/admin.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css')
    .options({
     processCssUrls: false

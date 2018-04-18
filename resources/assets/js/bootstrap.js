@@ -4,6 +4,8 @@ import Vuex from 'vuex'
 import Vuetify from 'vuetify'
 import VueSwal from 'vue-swal'
 import 'vuetify/dist/vuetify.min.css' 
+import 'babel-polyfill'
+
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(Vuetify)
