@@ -4,6 +4,7 @@ import Index from './components/users/Index.vue'
 import Login from './components/users/Login.vue'
 import Dashboard from './components/players/Dashboard.vue'
 import Photoword from './components/players/Photoword.vue'
+import Nymrush from './components/players/Nymrush.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -22,6 +23,10 @@ const routes = [
   {
     path: '/photoword',
     component: Photoword
+  },
+  {
+    path: '/nymrush',
+    component: Nymrush
   },
 ]
 

@@ -30,3 +30,8 @@ Route::get('/photoword', [
   'uses' => 'HomeController@home',
   'as' => 'photoword' 
 ]);
+
+Route::get('/nymrush', [ 
+  'uses' => 'HomeController@home',
+  'as' => 'nymrush' 
+]);

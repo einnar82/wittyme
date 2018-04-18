@@ -36,15 +36,17 @@
       <v-layout row wrap>
         <v-flex align-center="true">
           <p class="headline text-xs-center text-sm-center text-md-center text-lg-center text-xl-center">
-            Direction: Guess the picture according to their action.
+            Direction:  Give the correct synonym/antonyms of the given word.
           </p>
         </v-flex>
       </v-layout>
     </v-container>
     <v-container fluid=true>
       <v-layout row wrap>
-        <v-flex>
-          <div class="picture elevation-1"/>
+        <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
+          <p class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1">
+            HANDSOME
+          </p>
         </v-flex>
       </v-layout>
     </v-container>
@@ -83,26 +85,20 @@
 
 <script>
 export default {
-  name:'Photoword',
+  name: 'Nymrush',
   data () {
     return {
-      
+
     }
   },
   methods: {
     select() {
-      this.$swal('Hello word!');
+      this.$swal('Hello World');
     }
   }
 }
 </script>
 
-<style scoped lang="scss">
-.picture {
-  background: url('/images/sample.jpeg')no-repeat;
-  height: 200px;
-  width: 200px;
-  background-size: contain;
-  margin: 0 auto;
-}
+<style>
+
 </style>
