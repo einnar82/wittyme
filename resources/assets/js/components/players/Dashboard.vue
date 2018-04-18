@@ -28,7 +28,8 @@
             <p class="text-xs-center text-sm-center text-md-left text-lg-left text-xl-left display-2 mt-4">Photoword</p>  
             <p class="text-xs-center text-sm-center text-md-left text-lg-left text-xl-left headline mt-4">Refresh your mind by supplying
               the correct word in each blank provided.</p>     
-            <v-btn large color="primary btn-start">Start</v-btn>     
+            <v-btn large color="primary btn-start"
+                        @click="photoword">Start</v-btn>     
           </v-flex>
         </v-layout>
       </v-flex>
@@ -43,7 +44,8 @@
             <p class="text-xs-center text-sm-center text-md-left text-lg-left text-xl-left display-2 mt-4">-Nym Rush</p>  
             <p class="text-xs-center text-sm-center text-md-left text-lg-left text-xl-left headline mt-4">Expand your vocabulary by
               supplying the correct antonym or synonym of the given word.</p>     
-            <v-btn large color="primary btn-start">Start</v-btn>     
+            <v-btn large color="primary btn-start"
+                        @click="nymrush">Start</v-btn>     
           </v-flex>
         </v-layout>
       </v-flex>
@@ -69,7 +71,20 @@
 
 <script>
 export default {
-  name: 'Dashboard'
+  name: 'Dashboard',
+  data () {
+    return {
+
+    }
+  },
+  methods: {
+    photoword () {
+      window.location.href = '/photoword';
+    },
+    nymrush () {
+      window.location.href = '/nymrush';
+    }
+  }
 }
 </script>
 

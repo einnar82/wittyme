@@ -25,3 +25,8 @@ Route::get('/dashboard', [
   'uses' => 'HomeController@home',
   'as' => 'dashboard' 
 ]);
+
+Route::get('/photoword', [ 
+  'uses' => 'HomeController@home',
+  'as' => 'photoword' 
+]);
