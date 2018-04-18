@@ -45,3 +45,21 @@ Route::get('/administrator', [
   'uses' => 'HomeController@admin',
   'as' => 'administrator' 
 ]);
+
+Route::prefix('administrator')->group(function () {
+
+  Route::get('photoword', [ 
+    'uses' => 'HomeController@admin',
+    'as' => 'admin.photoword' 
+  ]);
+
+  Route::get('nymrush', [ 
+    'uses' => 'HomeController@admin',
+    'as' => 'admin.nymrush' 
+  ]);
+
+  Route::get('fixitup', [ 
+    'uses' => 'HomeController@admin',
+    'as' => 'admin.fixitup' 
+  ]);
+});

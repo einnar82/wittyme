@@ -6,7 +6,7 @@
       app
     >
       <v-list dense>
-        <v-list-tile @click="">
+        <v-list-tile to="/administrator/photoword">
           <v-list-tile-action>
             <v-icon>insert_photo</v-icon>
           </v-list-tile-action>
@@ -14,7 +14,7 @@
             <v-list-tile-title>Photoword</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="">
+        <v-list-tile to="/administrator/nymrush">
           <v-list-tile-action>
             <v-icon>sort_by_alpha</v-icon>
           </v-list-tile-action>
@@ -22,7 +22,7 @@
             <v-list-tile-title>Nymrush</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="">
+        <v-list-tile to="/administrator/fixitup">
           <v-list-tile-action>
             <v-icon>text_format</v-icon>
           </v-list-tile-action>
@@ -44,7 +44,7 @@
         <v-list-tile>
             <v-list-tile-title>Rannie Ollit</v-list-tile-title>
         </v-list-tile>
-        <v-list-tile @click="">
+        <v-list-tile @click="logout">
             <v-list-tile-title>Logout</v-list-tile-title>
         </v-list-tile>
       </v-list>
@@ -68,6 +68,11 @@ export default {
   data () {
     return {
       drawer: null
+    }
+  },
+  methods: {
+    logout () {
+      
     }
   }
 }
