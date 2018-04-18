@@ -10,6 +10,8 @@ export const store = new Vuex.Store({
       answer2: '',
       answer3: '',
       correct: '',
+      loading: false,
+      loader: null,
       choices: [
         {no:1, textNode: ''},
         {no:2, textNode: ''},
@@ -18,8 +20,6 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
-    setCorrect: state => {
-      return state.photoword.correct;
-    }
+    
   }
 });

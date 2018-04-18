@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid=true>
+  <v-container fluid=true grid-list-{xs through xl}=true>
     <v-layout row wrap>
-      <v-flex xs12 sm12 md6 lg6 xl6>
+      <v-flex xs12 sm12 md4 lg4 xl4 class="elevation-6 pa-3 mb-3">
         <p class="headline text-xs-center text-sm-center text-md-center text-lg-center text-xl-center">
           Add your questions:
         </p>
@@ -27,6 +27,61 @@
         <v-text-field name="answer"
                       label="Answer"
                       v-model="correct"/>
+          <div class="text-xs-center">          
+            <v-btn  color="info"
+                    :loading="loading"
+                    @click.native="loader = 'loading'"
+                    :disabled="loading">
+              Save Question
+              <span slot="loader" class="custom-loader">
+                <v-icon light>cached</v-icon>
+              </span>
+              </v-btn>
+          </div>
+      </v-flex> 
+      <v-flex hidden-sm-and-down md1 lg1 xl1>
+        
+      </v-flex>
+      <v-flex xs12 sm12 md7 lg7 xl7 class="mb-3">
+        <v-flex xs12 sm12 md12 lg12 xl12>
+            <v-card>
+              <v-card-title>
+                 <p class="headline">List of Questions</p>
+              <v-spacer></v-spacer>
+              <v-text-field
+                append-icon="search"
+                label="Search"
+                single-line
+                hide-details
+                v-model="search"
+              ></v-text-field>
+            </v-card-title>
+            <v-data-table
+              :headers="headers"
+              :items="items"
+              :search="search"
+            >
+              <template slot="items" slot-scope="props">
+                <td>{{ props.item.name }}</td>
+                <td class="text-xs-right">{{ props.item.calories }}</td>
+                <td class="text-xs-right">{{ props.item.fat }}</td>
+                <td class="text-xs-right">{{ props.item.carbs }}</td>
+                <td class="text-xs-right">{{ props.item.protein }}</td>
+                <td class="justify-center layout px-0">
+                  <v-btn icon class="mx-0" @click="editItem(props.item)">
+                    <v-icon color="teal">edit</v-icon>
+                  </v-btn>
+                  <v-btn icon class="mx-0" @click="deleteItem(props.item)">
+                    <v-icon color="pink">delete</v-icon>
+                  </v-btn>
+                </td>
+              </template>
+              <v-alert slot="no-results" :value="true" color="error" icon="warning">
+                Your search for "{{ search }}" found no results.
+              </v-alert>
+            </v-data-table>
+            </v-card>
+        </v-flex>
       </v-flex>
     </v-layout>
   </v-container>
@@ -36,6 +91,33 @@
 import UploadButton from '../ui/UploadButton'
 export default {
   name: 'PhotowordReview',
+  data () {
+    return {
+        search: '',
+        headers: [
+          {
+            text: 'Image',
+            align: 'left',
+            sortable: false,
+            value: 'image'
+          },
+          { text: 'Choice 1', value: 'choice1' },
+          { text: 'Choice 2', value: 'choice2' },
+          { text: 'Choice 3', value: 'choice3' },
+          { text: 'Answer', value: 'answer' },
+          { text: 'Actions', value: 'actions', sortable: false },
+        ],
+        items: [
+          {
+            value: false,
+            name: 'Frozen Yogurt',
+            calories: 159,
+            fat: 6.0,
+            carbs: 24,
+            protein: 4.0,
+          }]
+    }
+  },
   computed: {
     fileName () {
       return this.$store.state.photoword.fileName;
@@ -47,14 +129,47 @@ export default {
         get () { 
           return this.$store.state.photoword.correct; 
         },
-        set(value) {
+        set (value) {
           this.$store.state.photoword.correct = value
         }
     },
+    loading: {
+      get () {
+         return this.$store.state.photoword.loading;
+      },
+      set (value) {
+        this.$store.state.photoword.loading = value
+      }
+     
+    },
+    loader: {
+      get () {
+        return this.$store.state.photoword.loader;
+      },
+      set (value) {
+        this.$store.state.photoword.loader = value
+      }
+    }
   },
   methods: {
     fileSelectedFunc(e) {
       this.$store.state.photoword.fileName = e.name;
+    },
+    editItem(item) {
+
+    },
+    deleteItem(item) {
+
+    }
+  },
+  watch: {
+    loader () {
+        const l = this.loader
+        this[l] = !this[l]
+
+        setTimeout(() => (this[l] = false), 2000)
+
+        this.loader = null
     }
   },
   components: {
@@ -64,5 +179,40 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+  .custom-loader {
+    animation: loader 1s infinite;
+    display: flex;
+  }
+  @-moz-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 </style>
