@@ -6,6 +6,8 @@ import Dashboard from './components/players/Dashboard.vue'
 import Photoword from './components/players/Photoword.vue'
 import Nymrush from './components/players/Nymrush.vue'
 import FixItUp from './components/players/FixItUp.vue'
+import Admin from './components/administrator/Admin.vue'
+import Charts from './components/administrator/Charts.vue' 
 Vue.use(VueRouter)
 
 const routes = [
@@ -32,6 +34,17 @@ const routes = [
   {
     path: '/fixitup',
     component: FixItUp
+  },
+  {
+    path: '/administrator',
+    component: Admin,
+    children: [
+      {
+        path: '/',
+        component: Charts
+
+      }
+    ]
   },
 ]
 

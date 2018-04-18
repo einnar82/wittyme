@@ -5,9 +5,8 @@
  * application frontend using useful Laravel and JavaScript libraries.
  */
 
-require('./bootstrap');
+import '../js/bootstrap'
 
-import 'babel-polyfill'
 import Home from './components/layouts/Home.vue'
 import router from './routes'
 const app = new Vue({

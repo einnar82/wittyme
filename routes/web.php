@@ -40,3 +40,8 @@ Route::get('/fixitup', [
   'uses' => 'HomeController@home',
   'as' => 'fixitup' 
 ]);
+
+Route::get('/administrator', [ 
+  'uses' => 'HomeController@admin',
+  'as' => 'administrator' 
+]);
