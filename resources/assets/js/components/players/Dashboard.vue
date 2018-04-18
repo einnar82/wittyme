@@ -60,7 +60,8 @@
             <p class="text-xs-center text-sm-center text-md-left text-lg-left text-xl-left display-2 mt-4">FixItUp</p>  
             <p class="text-xs-center text-sm-center text-md-left text-lg-left text-xl-left headline mt-4">Remember the correct sentence structure
               by arranging the jumbled sentences.</p>     
-            <v-btn large color="primary btn-start">Start</v-btn>     
+            <v-btn large color="primary btn-start"
+                        @click="fixitup">Start</v-btn>     
           </v-flex>
         </v-layout>
       </v-flex>
@@ -83,6 +84,9 @@ export default {
     },
     nymrush () {
       window.location.href = '/nymrush';
+    },
+    fixitup () {
+      window.location.href = '/fixitup';
     }
   }
 }

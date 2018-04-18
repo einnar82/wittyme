@@ -5,6 +5,7 @@ import Login from './components/users/Login.vue'
 import Dashboard from './components/players/Dashboard.vue'
 import Photoword from './components/players/Photoword.vue'
 import Nymrush from './components/players/Nymrush.vue'
+import FixItUp from './components/players/FixItUp.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -27,6 +28,10 @@ const routes = [
   {
     path: '/nymrush',
     component: Nymrush
+  },
+  {
+    path: '/fixitup',
+    component: FixItUp
   },
 ]
 
