@@ -36,7 +36,7 @@
       <v-layout row wrap>
         <v-flex align-center="true">
           <p class="headline text-xs-center text-sm-center text-md-center text-lg-center text-xl-center">
-            Direction:  Give the correct synonym/antonyms of the given word.
+            Direction:  Arrange the jumbled words to make the sentence correct.
           </p>
         </v-flex>
       </v-layout>
@@ -45,38 +45,20 @@
       <v-layout row wrap>
         <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
           <p class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1">
-            HANDSOME
+            island No an one is
           </p>
         </v-flex>
       </v-layout>
     </v-container>
-    <v-container fluid=true align-center=true>
+    <v-container>
       <v-layout row wrap>
-        <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
-           <div class="text-xs-center">
-              <v-btn round color="primary" dark @click="select">Rounded Button</v-btn>
-            </div>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
-          <div class="text-xs-center">
-            <v-btn round color="primary" dark @click="select">Rounded Button</v-btn>
-          </div>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
-          <div class="text-xs-center">
-            <v-btn round color="primary" dark @click="select">Rounded Button</v-btn>
-          </div>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
-          <div class="text-xs-center">
-            <v-btn round color="primary" dark @click="select">Rounded Button</v-btn>
-          </div>
+        <v-flex>
+          <v-text-field xs12 sm12 md12 lg12 xl12 align-center=true
+          name="answer"
+          label="Your answer"
+          id="answer"
+          v-model="answer">
+          </v-text-field>
         </v-flex>
       </v-layout>
     </v-container>
@@ -85,10 +67,10 @@
 
 <script>
 export default {
-  name: 'Nymrush',
+  name: 'FixItUp',
   data () {
     return {
-
+      answer: '',
     }
   },
   methods: {

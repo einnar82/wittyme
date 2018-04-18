@@ -35,3 +35,8 @@ Route::get('/nymrush', [
   'uses' => 'HomeController@home',
   'as' => 'nymrush' 
 ]);
+
+Route::get('/fixitup', [ 
+  'uses' => 'HomeController@home',
+  'as' => 'fixitup' 
+]);
