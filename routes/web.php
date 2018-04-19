@@ -68,3 +68,9 @@ Route::prefix('administrator')->group(function () {
     'as' => 'admin.login' 
   ]);
 });
+
+Route::resources([
+  'actions/photoword' => 'PhotowordController',
+  'actions/nymrush' => 'NymrushController',
+  'actions/fixitup' => 'FixItUpController',
+]);
