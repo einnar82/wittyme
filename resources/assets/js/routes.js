@@ -10,6 +10,7 @@ import Admin from './components/administrator/Admin.vue'
 import Charts from './components/administrator/Charts.vue' 
 import PhotowordReview from './components/administrator/PhotoWordReview.vue'
 import NymrushReview from './components/administrator/NymrushReview.vue'
+import FixItUpReview from './components/administrator/FixItUpReview.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -52,6 +53,10 @@ const routes = [
       {
         path: 'nymrush',
         component: NymrushReview
+      },
+      {
+        path: 'fixitup',
+        component: FixItUpReview
       }
     ]
   },
