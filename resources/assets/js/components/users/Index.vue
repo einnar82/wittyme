@@ -99,6 +99,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Index',
   data () {
@@ -129,7 +130,7 @@ export default {
       this.$refs.form.reset()
     },
     submit () {
-
+      
     }
   }
 }
