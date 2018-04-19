@@ -17,7 +17,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary">Login</v-btn>
+                <v-btn color="primary" @click="auth">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -38,6 +38,11 @@ export default {
       drawer: null
     }
   },
+  methods: {
+    auth () {
+      window.location.href = '/administrator'
+    }
+  }
 }
 </script>
 
