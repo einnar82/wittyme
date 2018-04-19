@@ -29,6 +29,6 @@ class CreateFixItUpsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fix_it_ups');
+        Schema::dropIfExists('fixitup');
     }
 }

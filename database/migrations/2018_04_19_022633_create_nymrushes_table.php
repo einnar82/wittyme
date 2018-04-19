@@ -31,6 +31,6 @@ class CreateNymrushesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nymrushes');
+        Schema::dropIfExists('nymrush');
     }
 }
