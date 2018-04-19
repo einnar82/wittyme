@@ -74,3 +74,8 @@ Route::resources([
   'actions/nymrush' => 'NymrushController',
   'actions/fixitup' => 'FixItUpController',
 ]);
+
+Route::post('/register', [
+    'uses' => 'UsersController@register',
+    'as' => 'register'
+]);
