@@ -6,13 +6,10 @@
           Add your questions:
         </p>
         <v-text-field
-          name="fileName"
-          label="File Name"
-          :value="fileName"
-          disabled
+          name="synonym"
+          label="Words than synonimous"
+          v-model="synonym"
         ></v-text-field>
-        <upload-button title="Upload Image" :selectedCallback="fileSelectedFunc">
-        </upload-button>
         <p class="headline pt-2 text-xs-center text-sm-center text-md-center text-lg-center text-xl-center">
           Type the choices:
         </p>
@@ -88,12 +85,11 @@
 </template>
 
 <script>
-import UploadButton from '../ui/UploadButton'
 export default {
-  name: 'PhotowordReview',
+  name: 'NymrushReview',
   data () {
     return {
-        fileName: 'Insert image!',
+        synonym: '',
         answer1: '',
         answer2: '',
         answer3: '',
@@ -108,10 +104,9 @@ export default {
         search: '',
         headers: [
           {
-            text: 'Image',
+            text: 'Synonym Word',
             align: 'left',
-            sortable: false,
-            value: 'image'
+            value: 'synonym'
           },
           { text: 'Choice 1', value: 'choice1' },
           { text: 'Choice 2', value: 'choice2' },
@@ -152,9 +147,6 @@ export default {
         this.loader = null
     }
   },
-  components: {
-    UploadButton
-  }
 }
 </script>
 
