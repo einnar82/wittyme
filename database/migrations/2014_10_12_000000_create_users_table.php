@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('gender');
             $table->string('high_score');
+            $table->string('type');
             $table->rememberToken();
             $table->timestamps();
         });
