@@ -62,4 +62,9 @@ Route::prefix('administrator')->group(function () {
     'uses' => 'HomeController@admin',
     'as' => 'admin.fixitup' 
   ]);
+
+  Route::get('login', [ 
+    'uses' => 'HomeController@login',
+    'as' => 'admin.login' 
+  ]);
 });
