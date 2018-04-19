@@ -9,6 +9,7 @@ import FixItUp from './components/players/FixItUp.vue'
 import Admin from './components/administrator/Admin.vue'
 import Charts from './components/administrator/Charts.vue' 
 import PhotowordReview from './components/administrator/PhotoWordReview.vue'
+import NymrushReview from './components/administrator/NymrushReview.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -47,6 +48,10 @@ const routes = [
       {
         path: 'photoword',
         component: PhotowordReview
+      },
+      {
+        path: 'nymrush',
+        component: NymrushReview
       }
     ]
   },
