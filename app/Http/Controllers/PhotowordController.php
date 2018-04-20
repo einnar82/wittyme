@@ -89,8 +89,10 @@ class PhotowordController extends Controller
      * @param  \App\Photoword  $photoword
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Photoword $photoword)
+    public function destroy(Photoword $photoword, Request $request)
     {
-        //
+        $photoword->find($request->id);
+        $photoword->delete();
+        return response(['message' => 'Deleted!'], 200);
     }
 }

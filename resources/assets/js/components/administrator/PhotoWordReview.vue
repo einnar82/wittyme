@@ -135,6 +135,11 @@ export default {
     },
     deleteItem(item) {
       console.log(item);
+      axios.delete(`/actions/photoword/${item.id}`)
+        .then(response => {
+          console.log(response);
+          this.get();
+        });
     },
     send() {
       this.loader = 'loading'

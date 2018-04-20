@@ -70097,10 +70097,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       console.log(item);
     },
     deleteItem: function deleteItem(item) {
+      var _this = this;
+
       console.log(item);
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.delete('/actions/photoword/' + item.id).then(function (response) {
+        console.log(response);
+        _this.get();
+      });
     },
     send: function send() {
-      var _this = this;
+      var _this2 = this;
 
       this.loader = 'loading';
       var theForm = new FormData();
@@ -70116,31 +70122,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       };
       __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/actions/photoword', theForm, config).then(function (response) {
         console.log(response);
-        _this.image = _this.correct = '';
-        _this.fileName = 'Insert image!';
-        _this.choices.forEach(function (result) {
+        _this2.image = _this2.correct = '';
+        _this2.fileName = 'Insert image!';
+        _this2.choices.forEach(function (result) {
           result.textNode = '';
         });
-        _this.get();
+        _this2.get();
       });
     },
     get: function get() {
-      var _this2 = this;
+      var _this3 = this;
 
       __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/actions/photoword').then(function (response) {
-        _this2.items = [];
-        _this2.items = response.data;
+        _this3.items = [];
+        _this3.items = response.data;
       });
     }
   },
   watch: {
     loader: function loader() {
-      var _this3 = this;
+      var _this4 = this;
 
       var l = this.loader;
       this[l] = !this[l];
       setTimeout(function () {
-        return _this3[l] = false;
+        return _this4[l] = false;
       }, 2000);
       this.loader = null;
     }
