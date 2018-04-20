@@ -62,11 +62,11 @@
               :search="search"
             >
               <template slot="items" slot-scope="props">
-                <td>{{ props.item.name }}</td>
-                <td class="text-xs-right">{{ props.item.calories }}</td>
-                <td class="text-xs-right">{{ props.item.fat }}</td>
-                <td class="text-xs-right">{{ props.item.carbs }}</td>
-                <td class="text-xs-right">{{ props.item.protein }}</td>
+                <td>{{ props.item.image_question }}</td>
+                <td class="text-xs-right">{{ props.item.choice1 }}</td>
+                <td class="text-xs-right">{{ props.item.choice2 }}</td>
+                <td class="text-xs-right">{{ props.item.choice3 }}</td>
+                <td class="text-xs-right">{{ props.item.answer }}</td>
                 <td class="justify-center layout px-0">
                   <v-btn icon class="mx-0" @click="editItem(props.item)">
                     <v-icon color="teal">edit</v-icon>
@@ -117,15 +117,7 @@ export default {
           { text: 'Answer', value: 'answer' },
           { text: 'Actions', value: 'actions', sortable: false },
         ],
-        items: [
-          {
-            value: false,
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-          }],
+        items: [],
         image: null
     }
   },
@@ -166,6 +158,13 @@ export default {
               result.textNode = ''
             });
       })
+    },
+    get() {
+      axios.get('/actions/photoword')
+        .then(response => {
+          console.log(response.data);
+          this.items = response.data;
+        });
     }
   },
   watch: {
@@ -178,6 +177,9 @@ export default {
   },
   components: {
     UploadButton
+  },
+  mounted() {
+    this.get();
   }
 }
 </script>
