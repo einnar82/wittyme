@@ -62,7 +62,7 @@
               :search="search"
             >
               <template slot="items" slot-scope="props">
-                <td>{{ props.item.image_question }}</td>
+                <td><img :src="`/storage/photoword/${props.item.image_question}`" class="max-image"></td>
                 <td class="text-xs-right">{{ props.item.choice1 }}</td>
                 <td class="text-xs-right">{{ props.item.choice2 }}</td>
                 <td class="text-xs-right">{{ props.item.choice3 }}</td>
@@ -131,10 +131,10 @@ export default {
       this.image = e
     },
     editItem(item) {
-
+      console.log(item);
     },
     deleteItem(item) {
-
+      console.log(item);
     },
     send() {
       this.loader = 'loading'
@@ -185,6 +185,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.max-image {
+  max-width: 50px;
+  max-height: 50px;
+}
   .custom-loader {
     animation: loader 1s infinite;
     display: flex;

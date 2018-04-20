@@ -65282,7 +65282,7 @@ exports = module.exports = __webpack_require__(12)(false);
 
 
 // module
-exports.push([module.i, "\n.custom-loader[data-v-7177dd44] {\n  -webkit-animation: loader-data-v-7177dd44 1s infinite;\n          animation: loader-data-v-7177dd44 1s infinite;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n@-webkit-keyframes loader-data-v-7177dd44 {\nfrom {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes loader-data-v-7177dd44 {\nfrom {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n", ""]);
+exports.push([module.i, "\n.max-image[data-v-7177dd44] {\n  max-width: 50px;\n  max-height: 50px;\n}\n.custom-loader[data-v-7177dd44] {\n  -webkit-animation: loader-data-v-7177dd44 1s infinite;\n          animation: loader-data-v-7177dd44 1s infinite;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n@-webkit-keyframes loader-data-v-7177dd44 {\nfrom {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes loader-data-v-7177dd44 {\nfrom {\n    -webkit-transform: rotate(0);\n            transform: rotate(0);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n", ""]);
 
 // exports
 
@@ -65417,8 +65417,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.fileName = e.name;
       this.image = e;
     },
-    editItem: function editItem(item) {},
-    deleteItem: function deleteItem(item) {},
+    editItem: function editItem(item) {
+      console.log(item);
+    },
+    deleteItem: function deleteItem(item) {
+      console.log(item);
+    },
     send: function send() {
       var _this = this;
 
@@ -65823,7 +65827,14 @@ var render = function() {
                               fn: function(props) {
                                 return [
                                   _c("td", [
-                                    _vm._v(_vm._s(props.item.image_question))
+                                    _c("img", {
+                                      staticClass: "max-image",
+                                      attrs: {
+                                        src:
+                                          "/storage/photoword/" +
+                                          props.item.image_question
+                                      }
+                                    })
                                   ]),
                                   _vm._v(" "),
                                   _c("td", { staticClass: "text-xs-right" }, [
