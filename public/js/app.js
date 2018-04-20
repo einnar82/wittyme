@@ -65445,13 +65445,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.choices.forEach(function (result) {
           result.textNode = '';
         });
+        _this.get();
       });
     },
     get: function get() {
       var _this2 = this;
 
       __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/actions/photoword').then(function (response) {
-        console.log(response.data);
+        _this2.items = [];
         _this2.items = response.data;
       });
     }

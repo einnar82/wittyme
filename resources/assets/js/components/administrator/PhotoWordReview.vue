@@ -157,12 +157,13 @@ export default {
             this.choices.forEach(result => {
               result.textNode = ''
             });
+            this.get();
       })
     },
     get() {
       axios.get('/actions/photoword')
         .then(response => {
-          console.log(response.data);
+          this.items = []
           this.items = response.data;
         });
     }
