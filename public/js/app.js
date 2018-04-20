@@ -65295,6 +65295,8 @@ exports.push([module.i, "\n.custom-loader[data-v-7177dd44] {\n  -webkit-animatio
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_UploadButton__ = __webpack_require__(422);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_UploadButton___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ui_UploadButton__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 //
 //
 //
@@ -65384,6 +65386,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -65391,9 +65394,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       fileName: 'Insert image!',
-      answer1: '',
-      answer2: '',
-      answer3: '',
       correct: '',
       loading: false,
       loader: null,
@@ -65412,26 +65412,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         fat: 6.0,
         carbs: 24,
         protein: 4.0
-      }]
+      }],
+      image: null
     };
   },
 
   computed: {},
   methods: {
     fileSelectedFunc: function fileSelectedFunc(e) {
+      console.log(e);
       this.fileName = e.name;
+      this.image = e;
     },
     editItem: function editItem(item) {},
-    deleteItem: function deleteItem(item) {}
+    deleteItem: function deleteItem(item) {},
+    send: function send() {
+      var _this = this;
+
+      this.loader = 'loading';
+      var theForm = new FormData();
+      theForm.append('image_question', this.image);
+      theForm.append('choice1', this.choices[0].textNode);
+      theForm.append('choice2', this.choices[1].textNode);
+      theForm.append('choice3', this.choices[2].textNode);
+      theForm.append('answer', this.correct);
+      var config = {
+        headers: {
+          'Content-type': 'multipart/form-data'
+        }
+      };
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/actions/photoword', theForm, config).then(function (response) {
+        console.log(response);
+        _this.image = _this.correct = '';
+        _this.fileName = 'Insert image!';
+        _this.choices.forEach(function (result) {
+          result.textNode = '';
+        });
+      });
+    }
   },
   watch: {
     loader: function loader() {
-      var _this = this;
+      var _this2 = this;
 
       var l = this.loader;
       this[l] = !this[l];
       setTimeout(function () {
-        return _this[l] = false;
+        return _this2[l] = false;
       }, 2000);
       this.loader = null;
     }
@@ -65574,7 +65601,11 @@ var render = function() {
   return _c("div", { staticClass: "btn btn-primary jbtn-file" }, [
     _vm._v(" " + _vm._s(_vm.title)),
     _c("input", {
-      attrs: { type: "file", accept: "image/x-png,image/jpg,image/jpeg" },
+      attrs: {
+        type: "file",
+        accept: "image/x-png,image/jpg,image/jpeg",
+        name: "image_question"
+      },
       on: { change: _vm.fileSelected }
     })
   ])
@@ -65652,7 +65683,7 @@ var render = function() {
                 return _c("v-text-field", {
                   key: choice.no,
                   attrs: {
-                    name: "choice",
+                    name: "choice" + (index + 1),
                     label: "Choice Number " + choice.no
                   },
                   model: {
@@ -65699,7 +65730,7 @@ var render = function() {
                       },
                       nativeOn: {
                         click: function($event) {
-                          _vm.loader = "loading"
+                          return _vm.send($event)
                         }
                       }
                     },

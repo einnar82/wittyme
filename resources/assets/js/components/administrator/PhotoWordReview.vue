@@ -18,7 +18,7 @@
         </p>
         <v-text-field v-for="(choice, index) in choices"
                       :key="choice.no"
-                      name="choice"
+                      :name="`choice${index + 1}`"
                       :label="`Choice Number ${choice.no}`"
                       v-model="choices[index].textNode"/>
         <p class="headline pt-1 text-xs-center text-sm-center text-md-center text-lg-center text-xl-center">
@@ -30,7 +30,7 @@
           <div class="text-xs-center">          
             <v-btn  color="info"
                     :loading="loading"
-                    @click.native="loader = 'loading'"
+                    @click.native="send"
                     :disabled="loading">
               Save Question
               <span slot="loader" class="custom-loader">
@@ -89,14 +89,12 @@
 
 <script>
 import UploadButton from '../ui/UploadButton'
+import axios from 'axios'
 export default {
   name: 'PhotowordReview',
   data () {
     return {
         fileName: 'Insert image!',
-        answer1: '',
-        answer2: '',
-        answer3: '',
         correct: '',
         loading: false,
         loader: null,
@@ -127,7 +125,8 @@ export default {
             fat: 6.0,
             carbs: 24,
             protein: 4.0,
-          }]
+          }],
+        image: null
     }
   },
   computed: {
@@ -135,13 +134,38 @@ export default {
   },
   methods: {
     fileSelectedFunc(e) {
-      this.fileName = e.name;
+      console.log(e);
+      this.fileName = e.name
+      this.image = e
     },
     editItem(item) {
 
     },
     deleteItem(item) {
 
+    },
+    send() {
+      this.loader = 'loading'
+      const theForm = new FormData();
+      theForm.append('image_question', this.image)
+      theForm.append('choice1', this.choices[0].textNode)
+      theForm.append('choice2', this.choices[1].textNode)
+      theForm.append('choice3', this.choices[2].textNode)
+      theForm.append('answer', this.correct)
+      const config = {
+        headers: {
+          'Content-type': 'multipart/form-data'
+        }
+      }
+      axios.post('/actions/photoword', theForm, config)
+          .then(response => {
+            console.log(response);
+            this.image = this.correct = ''
+            this.fileName = 'Insert image!'
+            this.choices.forEach(result => {
+              result.textNode = ''
+            });
+      })
     }
   },
   watch: {

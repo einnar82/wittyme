@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Photoword;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PhotowordController extends Controller
 {
@@ -14,7 +15,7 @@ class PhotowordController extends Controller
      */
     public function index()
     {
-        //
+      return Photoword::all();
     }
 
     /**
@@ -35,7 +36,17 @@ class PhotowordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $image = $request->file('image_question');
+        $fileName = Carbon::now('Asia/Shanghai')->format('y-m-d').md5(Carbon::now('Asia/Shanghai')->format('HH:mm')).$image->getClientOriginalName();
+        $photoword = Photoword::create([
+          'image_question' => $fileName,
+          'choice1' => $request->choice1,
+          'choice2' => $request->choice2,
+          'choice3' => $request->choice3,
+          'answer' => $request->answer
+        ]);
+        $image->move(storage_path().'/app/public/photoword', $fileName);  
+        return response($photoword, 200);
     }
 
     /**
