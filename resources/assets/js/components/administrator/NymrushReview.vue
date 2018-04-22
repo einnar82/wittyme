@@ -21,11 +21,11 @@
               :search="search"
             >
               <template slot="items" slot-scope="props">
-                <td>{{ props.item.name }}</td>
-                <td class="text-xs-right">{{ props.item.calories }}</td>
-                <td class="text-xs-right">{{ props.item.fat }}</td>
-                <td class="text-xs-right">{{ props.item.carbs }}</td>
-                <td class="text-xs-right">{{ props.item.protein }}</td>
+                <td>{{ props.item.synonym }}</td>
+                <td class="text-xs-right">{{ props.item.choice1 }}</td>
+                <td class="text-xs-right">{{ props.item.choice2 }}</td>
+                <td class="text-xs-right">{{ props.item.choice3 }}</td>
+                <td class="text-xs-right">{{ props.item.answer }}</td>
                 <td class="justify-center layout px-0">
                   <v-btn icon class="mx-0" @click="editItem(props.item)">
                     <v-icon color="teal">edit</v-icon>
@@ -69,7 +69,7 @@
           <div class="text-xs-center">          
             <v-btn  color="info"
                     :loading="loading"
-                    @click.native="loader = 'loading'"
+                    @click.native="send"
                     :disabled="loading">
               Save Question
               <span slot="loader" class="custom-loader">
@@ -83,14 +83,12 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'NymrushReview',
   data () {
     return {
         synonym: '',
-        answer1: '',
-        answer2: '',
-        answer3: '',
         correct: '',
         loading: false,
         loader: null,
@@ -112,29 +110,46 @@ export default {
           { text: 'Answer', value: 'answer' },
           { text: 'Actions', value: 'actions', sortable: false },
         ],
-        items: [
-          {
-            value: false,
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-          }]
+        items: []
     }
   },
   computed: {
 
   },
   methods: {
-    fileSelectedFunc(e) {
-      this.fileName = e.name;
+    clearAll () {
+      this.synonym = this.correct = ''
+      this.choices.forEach(result => {
+        result.textNode = ''
+      });
     },
-    editItem(item) {
+    editItem (item) {
 
     },
-    deleteItem(item) {
+    deleteItem (item) {
 
+    },
+    send () {
+      this.loader = 'loading'
+      axios.post('/actions/nymrush', {
+        synonym: this.synonym,
+        choice1: this.choices[0].textNode,
+        choice2: this.choices[1].textNode,
+        choice3: this.choices[2].textNode,
+        answer: this.correct
+      })
+      .then(response => {
+        console.log(response);
+        this.clearAll();
+        this.get();
+      });
+    },
+    get () {
+      axios.get('/actions/nymrush')
+        .then(response => {
+          console.log(response);
+          this.items = response.data
+        });
     }
   },
   watch: {
@@ -145,6 +160,9 @@ export default {
         this.loader = null
     }
   },
+  mounted() {
+    this.get();
+  }
 }
 </script>
 

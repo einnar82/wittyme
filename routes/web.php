@@ -79,3 +79,8 @@ Route::post('actions/photoword', 'PhotowordController@add');
 Route::get('actions/photoword', 'PhotowordController@get');
 Route::delete('actions/photoword/{id?}', 'PhotowordController@delete');
 Route::post('actions/photoword/{id?}', 'PhotowordController@update');
+
+Route::resources([
+  'actions/nymrush' => 'NymrushController',
+  'actions/fixitup' => 'FixItUpController'
+]);

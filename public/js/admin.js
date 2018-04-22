@@ -70818,6 +70818,8 @@ exports.push([module.i, "\n.custom-loader[data-v-728ec2dc] {\n  -webkit-animatio
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 //
 //
 //
@@ -70903,14 +70905,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NymrushReview',
   data: function data() {
     return {
       synonym: '',
-      answer1: '',
-      answer2: '',
-      answer3: '',
       correct: '',
       loading: false,
       loader: null,
@@ -70921,36 +70921,59 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         align: 'left',
         value: 'synonym'
       }, { text: 'Choice 1', value: 'choice1' }, { text: 'Choice 2', value: 'choice2' }, { text: 'Choice 3', value: 'choice3' }, { text: 'Answer', value: 'answer' }, { text: 'Actions', value: 'actions', sortable: false }],
-      items: [{
-        value: false,
-        name: 'Frozen Yogurt',
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0
-      }]
+      items: []
     };
   },
 
   computed: {},
   methods: {
-    fileSelectedFunc: function fileSelectedFunc(e) {
-      this.fileName = e.name;
+    clearAll: function clearAll() {
+      this.synonym = this.correct = '';
+      this.choices.forEach(function (result) {
+        result.textNode = '';
+      });
     },
     editItem: function editItem(item) {},
-    deleteItem: function deleteItem(item) {}
+    deleteItem: function deleteItem(item) {},
+    send: function send() {
+      var _this = this;
+
+      this.loader = 'loading';
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/actions/nymrush', {
+        synonym: this.synonym,
+        choice1: this.choices[0].textNode,
+        choice2: this.choices[1].textNode,
+        choice3: this.choices[2].textNode,
+        answer: this.correct
+      }).then(function (response) {
+        console.log(response);
+        _this.clearAll();
+        _this.get();
+      });
+    },
+    get: function get() {
+      var _this2 = this;
+
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/actions/nymrush').then(function (response) {
+        console.log(response);
+        _this2.items = response.data;
+      });
+    }
   },
   watch: {
     loader: function loader() {
-      var _this = this;
+      var _this3 = this;
 
       var l = this.loader;
       this[l] = !this[l];
       setTimeout(function () {
-        return _this[l] = false;
+        return _this3[l] = false;
       }, 2000);
       this.loader = null;
     }
+  },
+  mounted: function mounted() {
+    this.get();
   }
 });
 
@@ -71027,22 +71050,24 @@ var render = function() {
                               key: "items",
                               fn: function(props) {
                                 return [
-                                  _c("td", [_vm._v(_vm._s(props.item.name))]),
-                                  _vm._v(" "),
-                                  _c("td", { staticClass: "text-xs-right" }, [
-                                    _vm._v(_vm._s(props.item.calories))
+                                  _c("td", [
+                                    _vm._v(_vm._s(props.item.synonym))
                                   ]),
                                   _vm._v(" "),
                                   _c("td", { staticClass: "text-xs-right" }, [
-                                    _vm._v(_vm._s(props.item.fat))
+                                    _vm._v(_vm._s(props.item.choice1))
                                   ]),
                                   _vm._v(" "),
                                   _c("td", { staticClass: "text-xs-right" }, [
-                                    _vm._v(_vm._s(props.item.carbs))
+                                    _vm._v(_vm._s(props.item.choice2))
                                   ]),
                                   _vm._v(" "),
                                   _c("td", { staticClass: "text-xs-right" }, [
-                                    _vm._v(_vm._s(props.item.protein))
+                                    _vm._v(_vm._s(props.item.choice3))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", { staticClass: "text-xs-right" }, [
+                                    _vm._v(_vm._s(props.item.answer))
                                   ]),
                                   _vm._v(" "),
                                   _c(
@@ -71224,7 +71249,7 @@ var render = function() {
                       },
                       nativeOn: {
                         click: function($event) {
-                          _vm.loader = "loading"
+                          return _vm.send($event)
                         }
                       }
                     },
