@@ -93,7 +93,7 @@ class NymrushController extends Controller
      * @param  \App\Nymrush  $nymrush
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Nymrush $nymrush)
+    public function destroy(Nymrush $nymrush, Request $request)
     {
         $nymrush->find($request->id);
         $nymrush->delete();
