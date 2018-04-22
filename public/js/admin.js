@@ -70062,6 +70062,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -70082,7 +70093,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         value: 'image'
       }, { text: 'Choice 1', value: 'choice1' }, { text: 'Choice 2', value: 'choice2' }, { text: 'Choice 3', value: 'choice3' }, { text: 'Answer', value: 'answer' }, { text: 'Actions', value: 'actions', sortable: false }],
       items: [],
-      image: null
+      image: null,
+      isSaved: true,
+      isUpdated: false,
+      item: null,
+      theForm: new FormData()
     };
   },
 
@@ -70094,7 +70109,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.image = e;
     },
     editItem: function editItem(item) {
-      console.log(item);
+      this.isSaved = false;
+      this.isUpdated = true;
+      this.choices[0].textNode = item.choice1;
+      this.choices[1].textNode = item.choice2;
+      this.choices[2].textNode = item.choice3;
+      this.correct = item.answer, this.item = item;
     },
     deleteItem: function deleteItem(item) {
       var _this = this;
@@ -70109,18 +70129,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this2 = this;
 
       this.loader = 'loading';
-      var theForm = new FormData();
-      theForm.append('image_question', this.image);
-      theForm.append('choice1', this.choices[0].textNode);
-      theForm.append('choice2', this.choices[1].textNode);
-      theForm.append('choice3', this.choices[2].textNode);
-      theForm.append('answer', this.correct);
+      this.theForm.append('image_question', this.image);
+      this.theForm.append('choice1', this.choices[0].textNode);
+      this.theForm.append('choice2', this.choices[1].textNode);
+      this.theForm.append('choice3', this.choices[2].textNode);
+      this.theForm.append('answer', this.correct);
       var config = {
         headers: {
           'Content-type': 'multipart/form-data'
         }
       };
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/actions/photoword', theForm, config).then(function (response) {
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/actions/photoword', this.theForm, config).then(function (response) {
         console.log(response);
         _this2.image = _this2.correct = '';
         _this2.fileName = 'Insert image!';
@@ -70137,16 +70156,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this3.items = [];
         _this3.items = response.data;
       });
+    },
+    update: function update() {
+      var _this4 = this;
+
+      this.loader = 'loading';
+      this.theForm.append('image_question', this.image);
+      this.theForm.append('choice1', this.choices[0].textNode);
+      this.theForm.append('choice2', this.choices[1].textNode);
+      this.theForm.append('choice3', this.choices[2].textNode);
+      this.theForm.append('answer', this.correct);
+      var config = {
+        headers: {
+          'Content-type': 'multipart/form-data'
+        }
+      };
+      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/actions/photoword/' + this.item.id, this.theForm, config).then(function (response) {
+        _this4.image = _this4.correct = '';
+        _this4.fileName = 'Insert image!';
+        _this4.choices.forEach(function (result) {
+          result.textNode = '';
+        });
+        _this4.get();
+        _this4.isSaved = true;
+        _this4.isUpdated = false;
+      });
     }
   },
   watch: {
     loader: function loader() {
-      var _this4 = this;
+      var _this5 = this;
 
       var l = this.loader;
       this[l] = !this[l];
       setTimeout(function () {
-        return _this4[l] = false;
+        return _this5[l] = false;
       }, 2000);
       this.loader = null;
     }
@@ -70411,38 +70455,75 @@ var render = function() {
                 "div",
                 { staticClass: "text-xs-center" },
                 [
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: {
-                        color: "info",
-                        loading: _vm.loading,
-                        disabled: _vm.loading
-                      },
-                      nativeOn: {
-                        click: function($event) {
-                          return _vm.send($event)
-                        }
-                      }
-                    },
-                    [
-                      _vm._v("\n            Save Question\n            "),
-                      _c(
-                        "span",
+                  _vm.isSaved
+                    ? _c(
+                        "v-btn",
                         {
-                          staticClass: "custom-loader",
-                          attrs: { slot: "loader" },
-                          slot: "loader"
+                          attrs: {
+                            color: "info",
+                            loading: _vm.loading,
+                            disabled: _vm.loading
+                          },
+                          nativeOn: {
+                            click: function($event) {
+                              return _vm.send($event)
+                            }
+                          }
                         },
                         [
-                          _c("v-icon", { attrs: { light: "" } }, [
-                            _vm._v("cached")
-                          ])
-                        ],
-                        1
+                          _vm._v("\n            Save Question\n            "),
+                          _c(
+                            "span",
+                            {
+                              staticClass: "custom-loader",
+                              attrs: { slot: "loader" },
+                              slot: "loader"
+                            },
+                            [
+                              _c("v-icon", { attrs: { light: "" } }, [
+                                _vm._v("cached")
+                              ])
+                            ],
+                            1
+                          )
+                        ]
                       )
-                    ]
-                  )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.isUpdated
+                    ? _c(
+                        "v-btn",
+                        {
+                          attrs: {
+                            color: "info",
+                            loading: _vm.loading,
+                            disabled: _vm.loading
+                          },
+                          nativeOn: {
+                            click: function($event) {
+                              return _vm.update($event)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v("\n            Update Question\n            "),
+                          _c(
+                            "span",
+                            {
+                              staticClass: "custom-loader",
+                              attrs: { slot: "loader" },
+                              slot: "loader"
+                            },
+                            [
+                              _c("v-icon", { attrs: { light: "" } }, [
+                                _vm._v("cached")
+                              ])
+                            ],
+                            1
+                          )
+                        ]
+                      )
+                    : _vm._e()
                 ],
                 1
               )

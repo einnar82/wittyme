@@ -69,13 +69,13 @@ Route::prefix('administrator')->group(function () {
   ]);
 });
 
-Route::resources([
-  'actions/photoword' => 'PhotowordController',
-  'actions/nymrush' => 'NymrushController',
-  'actions/fixitup' => 'FixItUpController',
-]);
-
 Route::post('/register', [
     'uses' => 'UsersController@register',
     'as' => 'register'
 ]);
+
+
+Route::post('actions/photoword', 'PhotowordController@add');
+Route::get('actions/photoword', 'PhotowordController@get');
+Route::delete('actions/photoword/{id?}', 'PhotowordController@delete');
+Route::post('actions/photoword/{id?}', 'PhotowordController@update');

@@ -31,8 +31,19 @@
             <v-btn  color="info"
                     :loading="loading"
                     @click.native="send"
-                    :disabled="loading">
+                    :disabled="loading"
+                    v-if="isSaved">
               Save Question
+              <span slot="loader" class="custom-loader">
+                <v-icon light>cached</v-icon>
+              </span>
+              </v-btn>
+            <v-btn  color="info"
+                    :loading="loading"
+                    @click.native="update"
+                    :disabled="loading"
+                    v-if="isUpdated">
+              Update Question
               <span slot="loader" class="custom-loader">
                 <v-icon light>cached</v-icon>
               </span>
@@ -118,7 +129,11 @@ export default {
           { text: 'Actions', value: 'actions', sortable: false },
         ],
         items: [],
-        image: null
+        image: null,
+        isSaved: true,
+        isUpdated: false,
+        item: null,
+        theForm: new FormData(),
     }
   },
   computed: {
@@ -131,7 +146,13 @@ export default {
       this.image = e
     },
     editItem(item) {
-      console.log(item);
+      this.isSaved = false
+      this.isUpdated = true
+      this.choices[0].textNode = item.choice1
+      this.choices[1].textNode = item.choice2
+      this.choices[2].textNode = item.choice3
+      this.correct = item.answer,
+      this.item = item
     },
     deleteItem(item) {
       console.log(item);
@@ -143,18 +164,17 @@ export default {
     },
     send() {
       this.loader = 'loading'
-      const theForm = new FormData();
-      theForm.append('image_question', this.image)
-      theForm.append('choice1', this.choices[0].textNode)
-      theForm.append('choice2', this.choices[1].textNode)
-      theForm.append('choice3', this.choices[2].textNode)
-      theForm.append('answer', this.correct)
+      this.theForm.append('image_question', this.image)
+      this.theForm.append('choice1', this.choices[0].textNode)
+      this.theForm.append('choice2', this.choices[1].textNode)
+      this.theForm.append('choice3', this.choices[2].textNode)
+      this.theForm.append('answer', this.correct)
       const config = {
         headers: {
           'Content-type': 'multipart/form-data'
         }
       }
-      axios.post('/actions/photoword', theForm, config)
+      axios.post('/actions/photoword', this.theForm, config)
           .then(response => {
             console.log(response);
             this.image = this.correct = ''
@@ -171,6 +191,30 @@ export default {
           this.items = []
           this.items = response.data;
         });
+    },
+    update () {
+      this.loader = 'loading'
+      this.theForm.append('image_question', this.image)
+      this.theForm.append('choice1', this.choices[0].textNode)
+      this.theForm.append('choice2', this.choices[1].textNode)
+      this.theForm.append('choice3', this.choices[2].textNode)
+      this.theForm.append('answer', this.correct)
+      const config = {
+        headers: {
+          'Content-type': 'multipart/form-data'
+        }
+      }
+      axios.post(`/actions/photoword/${this.item.id}`, this.theForm, config)
+        .then(response => {
+            this.image = this.correct = ''
+            this.fileName = 'Insert image!'
+            this.choices.forEach(result => {
+              result.textNode = ''
+            });
+          this.get();
+          this.isSaved = true
+          this.isUpdated = false
+        })
     }
   },
   watch: {
