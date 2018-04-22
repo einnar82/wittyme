@@ -71472,6 +71472,8 @@ exports.push([module.i, "\n.custom-loader[data-v-55db699d] {\n  -webkit-animatio
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 //
 //
 //
@@ -71556,6 +71558,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'FixItUpReview',
@@ -71573,36 +71576,59 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         sortable: true,
         value: 'jumbled'
       }, { text: 'Answer', value: 'answer' }, { text: 'Explanation', value: 'explanation' }, { text: 'Actions', value: 'actions', sortable: false }],
-      items: [{
-        value: false,
-        name: 'Frozen Yogurt',
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0
-      }]
+      items: [],
+      item: null
     };
   },
 
   computed: {},
   methods: {
-    fileSelectedFunc: function fileSelectedFunc(e) {
-      this.fileName = e.name;
+    clearAll: function clearAll() {
+      this.jumbled = this.answer = this.explanation = '';
     },
-    editItem: function editItem(item) {},
-    deleteItem: function deleteItem(item) {}
+    editItem: function editItem(item) {
+      this.jumbled = item.jumbled;
+      this.answer = item.answer;
+      this.explanation = item.explanation;
+      this.item = item;
+    },
+    deleteItem: function deleteItem(item) {},
+    save: function save() {
+      var _this = this;
+
+      this.loader = 'loading';
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/actions/fixitup', {
+        jumbled: this.jumbled,
+        answer: this.answer,
+        explanation: this.explanation
+      }).then(function (response) {
+        console.log(response);
+        _this.clearAll();
+        _this.getAll();
+      });
+    },
+    getAll: function getAll() {
+      var _this2 = this;
+
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/actions/fixitup').then(function (response) {
+        _this2.items = response.data;
+      });
+    }
   },
   watch: {
     loader: function loader() {
-      var _this = this;
+      var _this3 = this;
 
       var l = this.loader;
       this[l] = !this[l];
       setTimeout(function () {
-        return _this[l] = false;
+        return _this3[l] = false;
       }, 2000);
       this.loader = null;
     }
+  },
+  mounted: function mounted() {
+    this.getAll();
   }
 });
 
@@ -71705,7 +71731,7 @@ var render = function() {
                       },
                       nativeOn: {
                         click: function($event) {
-                          _vm.loader = "loading"
+                          return _vm.save($event)
                         }
                       }
                     },
@@ -71793,14 +71819,16 @@ var render = function() {
                               key: "items",
                               fn: function(props) {
                                 return [
-                                  _c("td", [_vm._v(_vm._s(props.item.name))]),
-                                  _vm._v(" "),
-                                  _c("td", { staticClass: "text-xs-left" }, [
-                                    _vm._v(_vm._s(props.item.calories))
+                                  _c("td", [
+                                    _vm._v(_vm._s(props.item.jumbled))
                                   ]),
                                   _vm._v(" "),
                                   _c("td", { staticClass: "text-xs-left" }, [
-                                    _vm._v(_vm._s(props.item.fat))
+                                    _vm._v(_vm._s(props.item.answer))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", { staticClass: "text-xs-left" }, [
+                                    _vm._v(_vm._s(props.item.explanation))
                                   ]),
                                   _vm._v(" "),
                                   _c(

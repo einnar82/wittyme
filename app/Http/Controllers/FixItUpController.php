@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\FixItUp;
 use Illuminate\Http\Request;
+use App\Http\Requests\FixItUpRequest;
 
 class FixItUpController extends Controller
 {
@@ -14,7 +15,7 @@ class FixItUpController extends Controller
      */
     public function index()
     {
-        //
+        return FixItUp::all();
     }
 
     /**
@@ -33,9 +34,14 @@ class FixItUpController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FixItUpRequest $request)
     {
-        //
+        $fixItUp = FixItUp::create([
+          'jumbled' => $request->jumbled,
+          'answer' => $request->answer,
+          'explanation' => $request->explanation
+        ]);
+        return response($fixItUp, 200);
     }
 
     /**
@@ -67,9 +73,14 @@ class FixItUpController extends Controller
      * @param  \App\FixItUp  $fixItUp
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FixItUp $fixItUp)
+    public function update(FixItUpRequest $request, FixItUp $fixItUp)
     {
-        //
+        $fixItUp->find($request->id);
+        $fixItUp->jumbled = $request->jumbled;
+        $fixItUp->answer = $request->answer;
+        $fixItUp->explanation = $request->explanation;
+        $fixItUp->save();
+        return response($fixItUp, 200);
     }
 
     /**
@@ -78,8 +89,10 @@ class FixItUpController extends Controller
      * @param  \App\FixItUp  $fixItUp
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FixItUp $fixItUp)
+    public function destroy(FixItUp $fixItUp, Request $request)
     {
-        //
+      $fixItUp->find($request->id);
+      $fixItUp->delete();
+      return response(['message' => 'Deleted!'], 200);
     }
 }

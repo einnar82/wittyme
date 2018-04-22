@@ -27,7 +27,7 @@
           <div class="text-xs-center">          
             <v-btn  color="info"
                     :loading="loading"
-                    @click.native="loader = 'loading'"
+                    @click.native="save"
                     :disabled="loading">
               Save Question
               <span slot="loader" class="custom-loader">
@@ -59,9 +59,9 @@
               :search="search"
             >
               <template slot="items" slot-scope="props">
-                <td>{{ props.item.name }}</td>
-                <td class="text-xs-left">{{ props.item.calories }}</td>
-                <td class="text-xs-left">{{ props.item.fat }}</td>
+                <td>{{ props.item.jumbled }}</td>
+                <td class="text-xs-left">{{ props.item.answer }}</td>
+                <td class="text-xs-left">{{ props.item.explanation }}</td>
                 <td class="justify-center layout px-0">
                   <v-btn icon class="mx-0" @click="editItem(props.item)">
                     <v-icon color="teal">edit</v-icon>
@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'FixItUpReview',
   data () {
@@ -105,29 +106,44 @@ export default {
           { text: 'Explanation', value: 'explanation' },
           { text: 'Actions', value: 'actions', sortable: false },
         ],
-        items: [
-          {
-            value: false,
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-          }]
+        items: [],
+        item: null
     }
   },
   computed: {
 
   },
   methods: {
-    fileSelectedFunc(e) {
-      this.fileName = e.name;
+    clearAll () {
+      this.jumbled = this.answer = this.explanation = ''
     },
     editItem(item) {
-
+      this.jumbled = item.jumbled
+      this.answer = item.answer
+      this.explanation = item.explanation
+      this.item = item
     },
     deleteItem(item) {
 
+    },
+    save () {
+      this.loader = 'loading'
+      axios.post('/actions/fixitup', {
+        jumbled: this.jumbled,
+        answer: this.answer,
+        explanation: this.explanation
+      })
+      .then(response => {
+        console.log(response);
+        this.clearAll();
+        this.getAll();
+      });
+    },
+    getAll () {
+      axios.get('/actions/fixitup')
+        .then(response => {
+          this.items = response.data
+        });
     }
   },
   watch: {
@@ -138,6 +154,9 @@ export default {
         this.loader = null
     }
   },
+  mounted () {
+    this.getAll()
+  }
 }
 </script>
 
