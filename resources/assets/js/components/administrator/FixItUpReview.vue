@@ -16,8 +16,8 @@
         <v-text-field
           name="answer"
           label="The correct answer"
-          v-model="answer"
-        ></v-text-field>
+          v-model="answer">
+         </v-text-field>
         <p class="headline pt-1 text-xs-center text-sm-center text-md-center text-lg-center text-xl-center">
           Explanation:
         </p>
@@ -28,12 +28,23 @@
             <v-btn  color="info"
                     :loading="loading"
                     @click.native="save"
-                    :disabled="loading">
+                    :disabled="loading"
+                    v-if="isSave">
               Save Question
               <span slot="loader" class="custom-loader">
                 <v-icon light>cached</v-icon>
               </span>
-              </v-btn>
+            </v-btn>
+            <v-btn  color="info"
+                    :loading="loading"
+                    @click.native="update"
+                    :disabled="loading"
+                    v-if="isUpdate">
+              Update Question
+              <span slot="loader" class="custom-loader">
+                <v-icon light>cached</v-icon>
+              </span>
+            </v-btn>
           </div>
       </v-flex> 
       <v-flex hidden-sm-and-down md1 lg1 xl1>
@@ -88,6 +99,8 @@ export default {
   name: 'FixItUpReview',
   data () {
     return {
+        isSave: true,
+        isUpdate: false,
         jumbled: '',
         explanation: '',
         answer: '',
@@ -116,15 +129,36 @@ export default {
   methods: {
     clearAll () {
       this.jumbled = this.answer = this.explanation = ''
+      this.isSave = true
+      this.isUpdate = false
     },
     editItem(item) {
       this.jumbled = item.jumbled
       this.answer = item.answer
       this.explanation = item.explanation
       this.item = item
+      this.isSave = false
+      this.isUpdate = true
     },
     deleteItem(item) {
-
+      axios.delete(`/actions/fixitup/${item.id}`)
+        .then(response => {
+          console.log(response);
+          this.getAll()
+         })
+    },
+    update () {
+       this.loader = 'loading'
+       axios.put(`/actions/fixitup/${this.item.id}`, {
+          jumbled: this.jumbled,
+          answer: this.answer,
+          explanation: this.explanation
+       })
+       .then(response => {
+        console.log(response);
+        this.getAll();
+        this.clearAll();
+      });
     },
     save () {
       this.loader = 'loading'

@@ -80,7 +80,12 @@ Route::get('actions/photoword', 'PhotowordController@get');
 Route::delete('actions/photoword/{id?}', 'PhotowordController@delete');
 Route::post('actions/photoword/{id?}', 'PhotowordController@update');
 
+Route::post('actions/fixitup', 'FixItUpController@store');
+Route::get('actions/fixitup', 'FixItUpController@index');
+Route::delete('actions/fixitup/{id?}', 'FixItUpController@destroy');
+Route::put('actions/fixitup/{id?}', 'FixItUpController@update');
+
+
 Route::resources([
   'actions/nymrush' => 'NymrushController',
-  'actions/fixitup' => 'FixItUpController'
 ]);
