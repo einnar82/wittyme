@@ -50,4 +50,9 @@ class PhotowordController extends Controller
         $image->move(storage_path().'/app/public/photoword', $fileName); 
         return response($photoword, 200);
     }
+
+    public function getTenQuestions()
+    {
+      return Photoword::paginate(10);
+    }
 }

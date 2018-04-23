@@ -67858,7 +67858,7 @@ exports = module.exports = __webpack_require__(12)(false);
 
 
 // module
-exports.push([module.i, "\n.picture[data-v-83c501aa] {\n  background: url(\"/images/sample.jpeg\") no-repeat;\n  height: 200px;\n  width: 200px;\n  background-size: contain;\n  margin: 0 auto;\n}\n", ""]);
+exports.push([module.i, "\n.picture[data-v-83c501aa] {\n  height: 200px;\n  width: 200px;\n  background-size: contain;\n  margin: 0 auto;\n}\n", ""]);
 
 // exports
 
@@ -67869,6 +67869,11 @@ exports.push([module.i, "\n.picture[data-v-83c501aa] {\n  background: url(\"/ima
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
 //
 //
 //
@@ -67953,16 +67958,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Photoword',
   data: function data() {
-    return {};
+    return {
+      questions: []
+    };
   },
 
   methods: {
     select: function select() {
       this.$swal('Hello word!');
+    },
+    getAllQuestions: function getAllQuestions() {
+      var _this = this;
+
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/questions/photoword').then(function (response) {
+        _this.questions = response.data.data;
+        console.log(_this.questions);
+      });
     }
+  },
+  mounted: function mounted() {
+    this.getAllQuestions();
   }
 });
 
@@ -68083,209 +68102,244 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "v-container",
-        { attrs: { fluid: "true" } },
-        [
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c("v-flex", { attrs: { "align-center": "true" } }, [
+      _vm._l(_vm.questions, function(question, index) {
+        return _c(
+          "div",
+          { key: index },
+          [
+            _c(
+              "v-container",
+              { attrs: { fluid: "true" } },
+              [
                 _c(
-                  "p",
-                  {
-                    staticClass:
-                      "headline text-xs-center text-sm-center text-md-center text-lg-center text-xl-center"
-                  },
+                  "v-layout",
+                  { attrs: { row: "", wrap: "" } },
                   [
-                    _vm._v(
-                      "\n          Direction: Guess the picture according to their action.\n        "
-                    )
-                  ]
+                    _c("v-flex", { attrs: { "align-center": "true" } }, [
+                      _c(
+                        "p",
+                        {
+                          staticClass:
+                            "headline text-xs-center text-sm-center text-md-center text-lg-center text-xl-center"
+                        },
+                        [
+                          _vm._v(
+                            "\n          Direction: Guess the picture according to their action.\n          "
+                          )
+                        ]
+                      )
+                    ])
+                  ],
+                  1
                 )
-              ])
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-container",
-        { attrs: { fluid: "true" } },
-        [
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [_c("v-flex", [_c("div", { staticClass: "picture elevation-1" })])],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-container",
-        { attrs: { fluid: "true", "align-center": "true" } },
-        [
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  attrs: {
-                    xs12: "",
-                    sm12: "",
-                    md12: "",
-                    lg12: "",
-                    xl12: "",
-                    "align-center": "true"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "text-xs-center" },
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { round: "", color: "primary", dark: "" },
-                          on: { click: _vm.select }
-                        },
-                        [_vm._v("Rounded Button")]
-                      )
-                    ],
-                    1
-                  )
-                ]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  attrs: {
-                    xs12: "",
-                    sm12: "",
-                    md12: "",
-                    lg12: "",
-                    xl12: "",
-                    "align-center": "true"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "text-xs-center" },
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { round: "", color: "primary", dark: "" },
-                          on: { click: _vm.select }
-                        },
-                        [_vm._v("Rounded Button")]
-                      )
-                    ],
-                    1
-                  )
-                ]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  attrs: {
-                    xs12: "",
-                    sm12: "",
-                    md12: "",
-                    lg12: "",
-                    xl12: "",
-                    "align-center": "true"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "text-xs-center" },
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { round: "", color: "primary", dark: "" },
-                          on: { click: _vm.select }
-                        },
-                        [_vm._v("Rounded Button")]
-                      )
-                    ],
-                    1
-                  )
-                ]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  attrs: {
-                    xs12: "",
-                    sm12: "",
-                    md12: "",
-                    lg12: "",
-                    xl12: "",
-                    "align-center": "true"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "text-xs-center" },
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { round: "", color: "primary", dark: "" },
-                          on: { click: _vm.select }
-                        },
-                        [_vm._v("Rounded Button")]
-                      )
-                    ],
-                    1
-                  )
-                ]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-container",
+              { attrs: { fluid: "true" } },
+              [
+                _c(
+                  "v-layout",
+                  { attrs: { row: "", wrap: "" } },
+                  [
+                    _c("v-flex", [
+                      _c("div", {
+                        staticClass: "picture elevation-1",
+                        style:
+                          "background: url('/storage/photoword/" +
+                          question.image_question +
+                          "')no-repeat;"
+                      })
+                    ])
+                  ],
+                  1
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "v-container",
+              { attrs: { fluid: "true", "align-center": "true" } },
+              [
+                _c(
+                  "v-layout",
+                  { attrs: { row: "", wrap: "" } },
+                  [
+                    _c(
+                      "v-flex",
+                      {
+                        attrs: {
+                          xs12: "",
+                          sm12: "",
+                          md12: "",
+                          lg12: "",
+                          xl12: "",
+                          "align-center": "true"
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "text-xs-center" },
+                          [
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: {
+                                  round: "",
+                                  color: "primary",
+                                  dark: ""
+                                },
+                                on: { click: _vm.select }
+                              },
+                              [_vm._v(_vm._s(question.choice1))]
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-layout",
+                  { attrs: { row: "", wrap: "" } },
+                  [
+                    _c(
+                      "v-flex",
+                      {
+                        attrs: {
+                          xs12: "",
+                          sm12: "",
+                          md12: "",
+                          lg12: "",
+                          xl12: "",
+                          "align-center": "true"
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "text-xs-center" },
+                          [
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: {
+                                  round: "",
+                                  color: "primary",
+                                  dark: ""
+                                },
+                                on: { click: _vm.select }
+                              },
+                              [_vm._v(_vm._s(question.choice2))]
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-layout",
+                  { attrs: { row: "", wrap: "" } },
+                  [
+                    _c(
+                      "v-flex",
+                      {
+                        attrs: {
+                          xs12: "",
+                          sm12: "",
+                          md12: "",
+                          lg12: "",
+                          xl12: "",
+                          "align-center": "true"
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "text-xs-center" },
+                          [
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: {
+                                  round: "",
+                                  color: "primary",
+                                  dark: ""
+                                },
+                                on: { click: _vm.select }
+                              },
+                              [_vm._v(_vm._s(question.choice3))]
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-layout",
+                  { attrs: { row: "", wrap: "" } },
+                  [
+                    _c(
+                      "v-flex",
+                      {
+                        attrs: {
+                          xs12: "",
+                          sm12: "",
+                          md12: "",
+                          lg12: "",
+                          xl12: "",
+                          "align-center": "true"
+                        }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "text-xs-center" },
+                          [
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: {
+                                  round: "",
+                                  color: "primary",
+                                  dark: ""
+                                },
+                                on: { click: _vm.select }
+                              },
+                              [_vm._v(_vm._s(question.answer))]
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      })
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
