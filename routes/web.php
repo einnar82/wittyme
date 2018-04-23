@@ -69,8 +69,24 @@ Route::prefix('administrator')->group(function () {
   ]);
 });
 
+Route::post('/register', [
+    'uses' => 'UsersController@register',
+    'as' => 'register'
+]);
+
+
+Route::post('actions/photoword', 'PhotowordController@add');
+Route::get('actions/photoword', 'PhotowordController@get');
+Route::delete('actions/photoword/{id?}', 'PhotowordController@delete');
+Route::post('actions/photoword/{id?}', 'PhotowordController@update');
+Route::get('questions/photoword','PhotowordController@getTenQuestions');
+
+Route::post('actions/fixitup', 'FixItUpController@store');
+Route::get('actions/fixitup', 'FixItUpController@index');
+Route::delete('actions/fixitup/{id?}', 'FixItUpController@destroy');
+Route::put('actions/fixitup/{id?}', 'FixItUpController@update');
+
+
 Route::resources([
-  'actions/photoword' => 'PhotowordController',
   'actions/nymrush' => 'NymrushController',
-  'actions/fixitup' => 'FixItUpController',
 ]);

@@ -1,6 +1,6 @@
 <template>
   <div class="btn btn-primary jbtn-file"> {{ title }}<input
-    type="file" accept="image/x-png,image/jpg,image/jpeg" v-on:change="fileSelected"></div>
+    type="file" accept="image/x-png,image/jpg,image/jpeg" v-on:change="fileSelected" name="image_question"></div>
 </template>
 
 <script>

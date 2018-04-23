@@ -108,7 +108,7 @@ export default {
       valid: null,
       password: null,
       passwordRules: [
-        v => !!v || 'Name is required',
+        v => !!v || 'Password is required',
       ],
       nameRules: [
         v => !!v || 'Name is required',
@@ -130,7 +130,18 @@ export default {
       this.$refs.form.reset()
     },
     submit () {
-      
+      axios.post('/register', {
+            name: this.name,
+            email: this.email,
+            password: this.password,
+            gender: this.gender,
+            type: 'Player'
+      }).then(response => {
+         console.log(response)
+         this.clear()
+      });
+
+
     }
   }
 }

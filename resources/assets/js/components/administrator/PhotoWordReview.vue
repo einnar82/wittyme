@@ -18,7 +18,7 @@
         </p>
         <v-text-field v-for="(choice, index) in choices"
                       :key="choice.no"
-                      name="choice"
+                      :name="`choice${index + 1}`"
                       :label="`Choice Number ${choice.no}`"
                       v-model="choices[index].textNode"/>
         <p class="headline pt-1 text-xs-center text-sm-center text-md-center text-lg-center text-xl-center">
@@ -30,9 +30,20 @@
           <div class="text-xs-center">          
             <v-btn  color="info"
                     :loading="loading"
-                    @click.native="loader = 'loading'"
-                    :disabled="loading">
+                    @click.native="send"
+                    :disabled="loading"
+                    v-if="isSaved">
               Save Question
+              <span slot="loader" class="custom-loader">
+                <v-icon light>cached</v-icon>
+              </span>
+              </v-btn>
+            <v-btn  color="info"
+                    :loading="loading"
+                    @click.native="update"
+                    :disabled="loading"
+                    v-if="isUpdated">
+              Update Question
               <span slot="loader" class="custom-loader">
                 <v-icon light>cached</v-icon>
               </span>
@@ -62,11 +73,11 @@
               :search="search"
             >
               <template slot="items" slot-scope="props">
-                <td>{{ props.item.name }}</td>
-                <td class="text-xs-right">{{ props.item.calories }}</td>
-                <td class="text-xs-right">{{ props.item.fat }}</td>
-                <td class="text-xs-right">{{ props.item.carbs }}</td>
-                <td class="text-xs-right">{{ props.item.protein }}</td>
+                <td><img :src="`/storage/photoword/${props.item.image_question}`" class="max-image"></td>
+                <td class="text-xs-right">{{ props.item.choice1 }}</td>
+                <td class="text-xs-right">{{ props.item.choice2 }}</td>
+                <td class="text-xs-right">{{ props.item.choice3 }}</td>
+                <td class="text-xs-right">{{ props.item.answer }}</td>
                 <td class="justify-center layout px-0">
                   <v-btn icon class="mx-0" @click="editItem(props.item)">
                     <v-icon color="teal">edit</v-icon>
@@ -89,14 +100,12 @@
 
 <script>
 import UploadButton from '../ui/UploadButton'
+import axios from 'axios'
 export default {
   name: 'PhotowordReview',
   data () {
     return {
         fileName: 'Insert image!',
-        answer1: '',
-        answer2: '',
-        answer3: '',
         correct: '',
         loading: false,
         loader: null,
@@ -119,15 +128,12 @@ export default {
           { text: 'Answer', value: 'answer' },
           { text: 'Actions', value: 'actions', sortable: false },
         ],
-        items: [
-          {
-            value: false,
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-          }]
+        items: [],
+        image: null,
+        isSaved: true,
+        isUpdated: false,
+        item: null,
+        theForm: new FormData(),
     }
   },
   computed: {
@@ -135,13 +141,80 @@ export default {
   },
   methods: {
     fileSelectedFunc(e) {
-      this.fileName = e.name;
+      console.log(e);
+      this.fileName = e.name
+      this.image = e
     },
     editItem(item) {
-
+      this.isSaved = false
+      this.isUpdated = true
+      this.choices[0].textNode = item.choice1
+      this.choices[1].textNode = item.choice2
+      this.choices[2].textNode = item.choice3
+      this.correct = item.answer,
+      this.item = item
     },
     deleteItem(item) {
-
+      console.log(item);
+      axios.delete(`/actions/photoword/${item.id}`)
+        .then(response => {
+          console.log(response);
+          this.get();
+        });
+    },
+    send() {
+      this.loader = 'loading'
+      this.theForm.append('image_question', this.image)
+      this.theForm.append('choice1', this.choices[0].textNode)
+      this.theForm.append('choice2', this.choices[1].textNode)
+      this.theForm.append('choice3', this.choices[2].textNode)
+      this.theForm.append('answer', this.correct)
+      const config = {
+        headers: {
+          'Content-type': 'multipart/form-data'
+        }
+      }
+      axios.post('/actions/photoword', this.theForm, config)
+          .then(response => {
+            console.log(response);
+            this.image = this.correct = ''
+            this.fileName = 'Insert image!'
+            this.choices.forEach(result => {
+              result.textNode = ''
+            });
+            this.get();
+      })
+    },
+    get() {
+      axios.get('/actions/photoword')
+        .then(response => {
+          this.items = []
+          this.items = response.data;
+        });
+    },
+    update () {
+      this.loader = 'loading'
+      this.theForm.append('image_question', this.image)
+      this.theForm.append('choice1', this.choices[0].textNode)
+      this.theForm.append('choice2', this.choices[1].textNode)
+      this.theForm.append('choice3', this.choices[2].textNode)
+      this.theForm.append('answer', this.correct)
+      const config = {
+        headers: {
+          'Content-type': 'multipart/form-data'
+        }
+      }
+      axios.post(`/actions/photoword/${this.item.id}`, this.theForm, config)
+        .then(response => {
+            this.image = this.correct = ''
+            this.fileName = 'Insert image!'
+            this.choices.forEach(result => {
+              result.textNode = ''
+            });
+          this.get();
+          this.isSaved = true
+          this.isUpdated = false
+        })
     }
   },
   watch: {
@@ -154,11 +227,18 @@ export default {
   },
   components: {
     UploadButton
+  },
+  mounted() {
+    this.get();
   }
 }
 </script>
 
 <style scoped lang="scss">
+.max-image {
+  max-width: 50px;
+  max-height: 50px;
+}
   .custom-loader {
     animation: loader 1s infinite;
     display: flex;

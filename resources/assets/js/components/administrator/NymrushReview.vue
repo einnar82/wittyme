@@ -21,11 +21,11 @@
               :search="search"
             >
               <template slot="items" slot-scope="props">
-                <td>{{ props.item.name }}</td>
-                <td class="text-xs-right">{{ props.item.calories }}</td>
-                <td class="text-xs-right">{{ props.item.fat }}</td>
-                <td class="text-xs-right">{{ props.item.carbs }}</td>
-                <td class="text-xs-right">{{ props.item.protein }}</td>
+                <td>{{ props.item.synonym }}</td>
+                <td class="text-xs-left">{{ props.item.choice1 }}</td>
+                <td class="text-xs-left">{{ props.item.choice2 }}</td>
+                <td class="text-xs-left">{{ props.item.choice3 }}</td>
+                <td class="text-xs-left">{{ props.item.answer }}</td>
                 <td class="justify-center layout px-0">
                   <v-btn icon class="mx-0" @click="editItem(props.item)">
                     <v-icon color="teal">edit</v-icon>
@@ -69,13 +69,24 @@
           <div class="text-xs-center">          
             <v-btn  color="info"
                     :loading="loading"
-                    @click.native="loader = 'loading'"
-                    :disabled="loading">
+                    @click.native="send"
+                    :disabled="loading"
+                    v-if="isAdd">
               Save Question
               <span slot="loader" class="custom-loader">
                 <v-icon light>cached</v-icon>
               </span>
-              </v-btn>
+            </v-btn>
+            <v-btn  color="info"
+                    :loading="loading"
+                    @click.native="update"
+                    :disabled="loading"
+                    v-if="isUpdate">
+              Update Question
+              <span slot="loader" class="custom-loader">
+                <v-icon light>cached</v-icon>
+              </span>
+            </v-btn>
           </div>
       </v-flex>
     </v-layout>
@@ -83,14 +94,14 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'NymrushReview',
   data () {
     return {
+        isAdd: true,
+        isUpdate: false,
         synonym: '',
-        answer1: '',
-        answer2: '',
-        answer3: '',
         correct: '',
         loading: false,
         loader: null,
@@ -101,40 +112,81 @@ export default {
         ],
         search: '',
         headers: [
-          {
-            text: 'Synonym Word',
-            align: 'left',
-            value: 'synonym'
-          },
-          { text: 'Choice 1', value: 'choice1' },
-          { text: 'Choice 2', value: 'choice2' },
-          { text: 'Choice 3', value: 'choice3' },
-          { text: 'Answer', value: 'answer' },
-          { text: 'Actions', value: 'actions', sortable: false },
+          { text: 'Synonym Word', value: 'synonym', align: 'left' },
+          { text: 'Choice 1', value: 'choice1', align: 'left' },
+          { text: 'Choice 2', value: 'choice2', align: 'left' },
+          { text: 'Choice 3', value: 'choice3', align: 'left' },
+          { text: 'Answer', value: 'answer', align: 'left' },
+          { text: 'Actions', value: 'actions',align: 'left', sortable: false },
         ],
-        items: [
-          {
-            value: false,
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-          }]
+        items: [],
+        item: null
     }
   },
   computed: {
 
   },
   methods: {
-    fileSelectedFunc(e) {
-      this.fileName = e.name;
+    clearAll () {
+      this.synonym = this.correct = ''
+      this.choices.forEach(result => {
+        result.textNode = ''
+      });
+      this.item = null
+      this.isAdd = true
+      this.isUpdate = false
     },
-    editItem(item) {
-
+    editItem (item) {
+        this.synonym = item.synonym
+        this.choices[0].textNode = item.choice1
+        this.choices[1].textNode = item.choice2
+        this.choices[2].textNode = item.choice3
+        this.correct = item.answer
+        this.isAdd = false
+        this.isUpdate = true
+        this.item = item
     },
-    deleteItem(item) {
-
+    deleteItem (item) {
+      axios.delete(`/actions/nymrush/${item.id}`)
+        .then(response => this.get());
+    },
+    send () {
+      this.loader = 'loading'
+      axios.post('/actions/nymrush', {
+        synonym: this.synonym,
+        choice1: this.choices[0].textNode,
+        choice2: this.choices[1].textNode,
+        choice3: this.choices[2].textNode,
+        answer: this.correct
+      })
+      .then(response => {
+        console.log(response);
+        this.get();
+        this.clearAll();
+      });
+    },
+    get () {
+      axios.get('/actions/nymrush')
+        .then(response => {
+          console.log(response);
+          this.items = response.data
+        });
+    },
+    update () {
+      this.loader = 'loading'
+      axios.put(`/actions/nymrush/${this.item.id}`,
+      {
+        synonym: this.synonym,
+        choice1: this.choices[0].textNode,
+        choice2: this.choices[1].textNode,
+        choice3: this.choices[2].textNode,
+        answer: this.correct
+      })
+      .then(response => {
+        console.log(response);
+        this.get();
+        this.clearAll();
+      });
     }
   },
   watch: {
@@ -145,6 +197,9 @@ export default {
         this.loader = null
     }
   },
+  mounted() {
+    this.get();
+  }
 }
 </script>
 
