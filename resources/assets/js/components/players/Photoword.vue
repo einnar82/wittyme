@@ -32,8 +32,8 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <div v-for="(question, index) in questions"
-          :key="index">
+    <!-- <div v-for="(question, index) in s"
+          :key="index"> -->
      <v-container fluid=true>
         <v-layout row wrap>
           <v-flex align-center="true">
@@ -46,7 +46,7 @@
       <v-container fluid=true>
         <v-layout row wrap>
           <v-flex>
-            <div class="picture elevation-1" :style="`background: url('/storage/photoword/${question.image_question}')no-repeat;`"/>
+            <div class="picture elevation-1" :style="`background: url('/storage/photoword/${selectedQuestion.image_question}')no-repeat;`"/>
           </v-flex>
         </v-layout>
       </v-container>
@@ -54,33 +54,33 @@
         <v-layout row wrap>
           <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
             <div class="text-xs-center">
-                <v-btn round color="primary" dark @click="select">{{question.choice1}}</v-btn>
+                <v-btn round color="primary" dark @click="select">{{selectedQuestion.choice1}}</v-btn>
               </div>
           </v-flex>
         </v-layout>
         <v-layout row wrap>
           <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
             <div class="text-xs-center">
-              <v-btn round color="primary" dark @click="select">{{question.choice2}}</v-btn>
+              <v-btn round color="primary" dark @click="select">{{selectedQuestion.choice2}}</v-btn>
             </div>
           </v-flex>
         </v-layout>
         <v-layout row wrap>
           <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
             <div class="text-xs-center">
-              <v-btn round color="primary" dark @click="select">{{question.choice3}}</v-btn>
+              <v-btn round color="primary" dark @click="select">{{selectedQuestion.choice3}}</v-btn>
             </div>
           </v-flex>
         </v-layout>
         <v-layout row wrap>
           <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
             <div class="text-xs-center">
-              <v-btn round color="primary" dark @click="select">{{question.answer}}</v-btn>
+              <v-btn round color="primary" dark @click="select">{{selectedQuestion.answer}}</v-btn>
             </div>
           </v-flex>
         </v-layout>
       </v-container>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -90,7 +90,9 @@ export default {
   name:'Photoword',
   data () {
     return {
-      questions: []
+      questions: [],
+      selectedQuestion: null,
+      choices: []
     }
   },
   methods: {
@@ -101,12 +103,30 @@ export default {
       axios.get('/questions/photoword')
         .then(response => {
           this.questions = response.data.data
-          console.log(this.questions);
+          this.shuffleAnswers(this.questions);
         })
-    }
+    },
+    shuffleAnswers (array) {
+      for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+      }
+      this.selectedQuestion = temp;
+      this.getChoices(this.selectedQuestion)
+    },
+    getChoices (object) {
+      for(let index in object) { 
+          if (index == 'choice1' || index == 'choice2' || index == 'choice3' || index == 'answer') {
+            this.choices.push(object[index]);
+          }
+      }
+      console.log(this.choices);
+    } 
   },
   mounted () {
-    this.getAllQuestions()
+    this.getAllQuestions();
   }
 }
 </script>
