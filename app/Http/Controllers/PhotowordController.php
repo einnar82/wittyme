@@ -6,6 +6,7 @@ use App\Photoword;
 use Illuminate\Http\Request;
 use App\Http\Requests\PhotowordQuestionRequest;
 use Carbon\Carbon;
+use DB;
 
 class PhotowordController extends Controller
 {
@@ -53,6 +54,6 @@ class PhotowordController extends Controller
 
     public function getTenQuestions()
     {
-      return Photoword::paginate(10);
+      return Photoword::all();
     }
 }

@@ -86,13 +86,15 @@
 
 <script>
 import axios from 'axios'
+import shuffle from 'shuffle-array'
 export default {
   name:'Photoword',
   data () {
     return {
       questions: [],
       selectedQuestion: null,
-      choices: []
+      choices: [],
+      usedQuestions: []
     }
   },
   methods: {
@@ -102,19 +104,11 @@ export default {
     getAllQuestions () {
       axios.get('/questions/photoword')
         .then(response => {
-          this.questions = response.data.data
-          this.shuffleAnswers(this.questions);
+          this.questions = response.data
+          this.selectedQuestion = shuffle.pick(this.questions, {'picks': 1});
+          console.log(this.selectedQuestion);
+           this.getChoices(this.selectedQuestion)
         })
-    },
-    shuffleAnswers (array) {
-      for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-      }
-      this.selectedQuestion = temp;
-      this.getChoices(this.selectedQuestion)
     },
     getChoices (object) {
       for(let index in object) { 
