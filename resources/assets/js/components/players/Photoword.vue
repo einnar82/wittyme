@@ -77,11 +77,12 @@ export default {
   },
   methods: {
     select(choice) {
-      this.$swal('Hello word!');
       if (this.selectedQuestion.answer == choice) {
-        console.log('correct');
+        this.$swal('Correct!');
+        this.getAllQuestions();
       } else {
-        console.log('wrong');
+        this.$swal('Wrong!');
+        this.getAllQuestions();
       }
     },
     getAllQuestions () {
@@ -94,6 +95,7 @@ export default {
         })
     },
     getChoices (object) {
+      this.choices = [];
       for(let index in object) { 
           if (index == 'choice1' || index == 'choice2' || index == 'choice3' || index == 'answer') {
             this.choices.push(object[index]);

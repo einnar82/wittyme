@@ -67953,11 +67953,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     select: function select(choice) {
-      this.$swal('Hello word!');
       if (this.selectedQuestion.answer == choice) {
-        console.log('correct');
+        this.$swal('Correct!');
+        this.getAllQuestions();
       } else {
-        console.log('wrong');
+        this.$swal('Wrong!');
+        this.getAllQuestions();
       }
     },
     getAllQuestions: function getAllQuestions() {
@@ -67971,6 +67972,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     getChoices: function getChoices(object) {
+      this.choices = [];
       for (var index in object) {
         if (index == 'choice1' || index == 'choice2' || index == 'choice3' || index == 'answer') {
           this.choices.push(object[index]);
