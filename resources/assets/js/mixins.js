@@ -10,7 +10,16 @@ const myMixins = {
     }
   },
   methods: {
-    select(choice) {},
+    select(choice) {
+      if (this.selectedQuestion.answer == choice) {
+        this.$swal('Correct!');
+        this.score += 1;
+        this.getAllQuestions();
+      } else {
+        this.$swal('Wrong!');
+        this.getAllQuestions();
+      }
+    },
     getAllQuestions () {},
     getChoices (object) {} 
   },

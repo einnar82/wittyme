@@ -73,16 +73,6 @@ export default {
   name:'Photoword',
   mixins: [myMixins],
   methods: {
-    select(choice) {
-      if (this.selectedQuestion.answer == choice) {
-        this.$swal('Correct!');
-        this.score += 1;
-        this.getAllQuestions();
-      } else {
-        this.$swal('Wrong!');
-        this.getAllQuestions();
-      }
-    },
     getAllQuestions () {
       axios.get('/questions/photoword')
         .then(response => {

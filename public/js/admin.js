@@ -67947,16 +67947,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   name: 'Photoword',
   mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins__["a" /* default */]],
   methods: {
-    select: function select(choice) {
-      if (this.selectedQuestion.answer == choice) {
-        this.$swal('Correct!');
-        this.score += 1;
-        this.getAllQuestions();
-      } else {
-        this.$swal('Wrong!');
-        this.getAllQuestions();
-      }
-    },
     getAllQuestions: function getAllQuestions() {
       var _this = this;
 
@@ -68412,23 +68402,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_shuffle_array__ = __webpack_require__(398);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_shuffle_array___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_shuffle_array__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins__ = __webpack_require__(636);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -68505,17 +68478,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Nymrush',
   mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins__["a" /* default */]],
-  methods: _defineProperty({
-    select: function select(choice) {},
+  methods: {
     getAllQuestions: function getAllQuestions() {
+      var _this = this;
+
       axios.get('/actions/nymrush').then(function (response) {
-        console.log(response);
+        _this.questions = response.data;
+        _this.selectedQuestion = __WEBPACK_IMPORTED_MODULE_0_shuffle_array___default.a.pick(_this.questions, { 'picks': 1 });
+        _this.questionNumber += 1;
+        console.log(_this.selectedQuestion);
+        _this.getChoices(_this.selectedQuestion);
       });
     },
-    getChoices: function getChoices(object) {}
-  }, 'select', function select(choice) {
-    this.$swal('Hello World');
-  })
+    getChoices: function getChoices(object) {
+      this.choices = [];
+      for (var index in object) {
+        if (index == 'choice1' || index == 'choice2' || index == 'choice3' || index == 'answer') {
+          this.choices.push(object[index]);
+        }
+      }
+      __WEBPACK_IMPORTED_MODULE_0_shuffle_array___default()(this.choices);
+    }
+  }
 });
 
 /***/ }),
@@ -68566,7 +68550,13 @@ var render = function() {
                               staticClass:
                                 "text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1"
                             },
-                            [_vm._v("\n              100\n            ")]
+                            [
+                              _vm._v(
+                                "\n              " +
+                                  _vm._s(_vm.score) +
+                                  "\n            "
+                              )
+                            ]
                           )
                         ]
                       ),
@@ -68592,7 +68582,13 @@ var render = function() {
                               staticClass:
                                 "text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1"
                             },
-                            [_vm._v("\n             1 / 10\n            ")]
+                            [
+                              _vm._v(
+                                "\n             " +
+                                  _vm._s(_vm.questionNumber) +
+                                  " / 10\n            "
+                              )
+                            ]
                           )
                         ]
                       ),
@@ -68691,7 +68687,13 @@ var render = function() {
                       staticClass:
                         "text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1"
                     },
-                    [_vm._v("\n          HANDSOME\n        ")]
+                    [
+                      _vm._v(
+                        "\n          " +
+                          _vm._s(_vm.selectedQuestion.synonym) +
+                          "\n        "
+                      )
+                    ]
                   )
                 ]
               )
@@ -68705,10 +68707,10 @@ var render = function() {
       _c(
         "v-container",
         { attrs: { fluid: "true", "align-center": "true" } },
-        [
-          _c(
+        _vm._l(_vm.choices, function(choice, index) {
+          return _c(
             "v-layout",
-            { attrs: { row: "", wrap: "" } },
+            { key: index, attrs: { row: "", wrap: "" } },
             [
               _c(
                 "v-flex",
@@ -68731,123 +68733,13 @@ var render = function() {
                         "v-btn",
                         {
                           attrs: { round: "", color: "primary", dark: "" },
-                          on: { click: _vm.select }
+                          on: {
+                            click: function($event) {
+                              _vm.select(_vm.choices[index])
+                            }
+                          }
                         },
-                        [_vm._v("Rounded Button")]
-                      )
-                    ],
-                    1
-                  )
-                ]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  attrs: {
-                    xs12: "",
-                    sm12: "",
-                    md12: "",
-                    lg12: "",
-                    xl12: "",
-                    "align-center": "true"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "text-xs-center" },
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { round: "", color: "primary", dark: "" },
-                          on: { click: _vm.select }
-                        },
-                        [_vm._v("Rounded Button")]
-                      )
-                    ],
-                    1
-                  )
-                ]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  attrs: {
-                    xs12: "",
-                    sm12: "",
-                    md12: "",
-                    lg12: "",
-                    xl12: "",
-                    "align-center": "true"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "text-xs-center" },
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { round: "", color: "primary", dark: "" },
-                          on: { click: _vm.select }
-                        },
-                        [_vm._v("Rounded Button")]
-                      )
-                    ],
-                    1
-                  )
-                ]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-layout",
-            { attrs: { row: "", wrap: "" } },
-            [
-              _c(
-                "v-flex",
-                {
-                  attrs: {
-                    xs12: "",
-                    sm12: "",
-                    md12: "",
-                    lg12: "",
-                    xl12: "",
-                    "align-center": "true"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "text-xs-center" },
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { round: "", color: "primary", dark: "" },
-                          on: { click: _vm.select }
-                        },
-                        [_vm._v("Rounded Button")]
+                        [_vm._v(_vm._s(_vm.choices[index]))]
                       )
                     ],
                     1
@@ -68857,8 +68749,7 @@ var render = function() {
             ],
             1
           )
-        ],
-        1
+        })
       )
     ],
     1
@@ -98706,7 +98597,16 @@ var myMixins = {
   },
 
   methods: {
-    select: function select(choice) {},
+    select: function select(choice) {
+      if (this.selectedQuestion.answer == choice) {
+        this.$swal('Correct!');
+        this.score += 1;
+        this.getAllQuestions();
+      } else {
+        this.$swal('Wrong!');
+        this.getAllQuestions();
+      }
+    },
     getAllQuestions: function getAllQuestions() {},
     getChoices: function getChoices(object) {}
   },
