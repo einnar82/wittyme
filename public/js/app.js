@@ -63193,10 +63193,9 @@ exports.push([module.i, "\n.picture[data-v-83c501aa] {\n  height: 200px;\n  widt
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_shuffle_array__ = __webpack_require__(398);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_shuffle_array___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_shuffle_array__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_shuffle_array__ = __webpack_require__(398);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_shuffle_array___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_shuffle_array__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins__ = __webpack_require__(636);
 //
 //
 //
@@ -63270,17 +63269,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Photoword',
-  data: function data() {
-    return {
-      questions: [],
-      selectedQuestion: null,
-      choices: [],
-      usedQuestions: [],
-      score: 0,
-      questionNumber: 0
-    };
-  },
-
+  mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins__["a" /* default */]],
   methods: {
     select: function select(choice) {
       if (this.selectedQuestion.answer == choice) {
@@ -63295,9 +63284,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     getAllQuestions: function getAllQuestions() {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/questions/photoword').then(function (response) {
+      axios.get('/questions/photoword').then(function (response) {
         _this.questions = response.data;
-        _this.selectedQuestion = __WEBPACK_IMPORTED_MODULE_1_shuffle_array___default.a.pick(_this.questions, { 'picks': 1 });
+        _this.selectedQuestion = __WEBPACK_IMPORTED_MODULE_0_shuffle_array___default.a.pick(_this.questions, { 'picks': 1 });
         _this.questionNumber += 1;
         console.log(_this.selectedQuestion);
         _this.getChoices(_this.selectedQuestion);
@@ -63310,11 +63299,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.choices.push(object[index]);
         }
       }
-      __WEBPACK_IMPORTED_MODULE_1_shuffle_array___default()(this.choices);
+      __WEBPACK_IMPORTED_MODULE_0_shuffle_array___default()(this.choices);
     }
-  },
-  mounted: function mounted() {
-    this.getAllQuestions();
   }
 });
 
@@ -63747,6 +63733,11 @@ exports.push([module.i, "", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_shuffle_array__ = __webpack_require__(398);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_shuffle_array___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_shuffle_array__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins__ = __webpack_require__(636);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -63832,18 +63823,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Nymrush',
-  data: function data() {
-    return {};
-  },
-
-  methods: {
-    select: function select() {
-      this.$swal('Hello World');
-    }
-  }
+  mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins__["a" /* default */]],
+  methods: _defineProperty({
+    select: function select(choice) {},
+    getAllQuestions: function getAllQuestions() {
+      axios.get('/actions/nymrush').then(function (response) {
+        console.log(response);
+      });
+    },
+    getChoices: function getChoices(object) {}
+  }, 'select', function select(choice) {
+    this.$swal('Hello World');
+  })
 });
 
 /***/ }),
@@ -67507,9 +67503,11 @@ module.exports = __webpack_require__(576);
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__js_bootstrap__ = __webpack_require__(146);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_layouts_Home_vue__ = __webpack_require__(571);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_layouts_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_layouts_Home_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routes__ = __webpack_require__(378);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_layouts_Home_vue__ = __webpack_require__(571);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_layouts_Home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_layouts_Home_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(378);
 
 /**
  * First, we will load all of this project's Javascript utilities and other
@@ -67523,10 +67521,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var app = new Vue({
   el: '#app',
-  router: __WEBPACK_IMPORTED_MODULE_2__routes__["a" /* default */],
+  router: __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */],
   data: {},
   render: function render(h) {
-    return h(__WEBPACK_IMPORTED_MODULE_1__components_layouts_Home_vue___default.a);
+    return h(__WEBPACK_IMPORTED_MODULE_2__components_layouts_Home_vue___default.a);
   }
 });
 
@@ -67816,6 +67814,94 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 577 */,
+/* 578 */,
+/* 579 */,
+/* 580 */,
+/* 581 */,
+/* 582 */,
+/* 583 */,
+/* 584 */,
+/* 585 */,
+/* 586 */,
+/* 587 */,
+/* 588 */,
+/* 589 */,
+/* 590 */,
+/* 591 */,
+/* 592 */,
+/* 593 */,
+/* 594 */,
+/* 595 */,
+/* 596 */,
+/* 597 */,
+/* 598 */,
+/* 599 */,
+/* 600 */,
+/* 601 */,
+/* 602 */,
+/* 603 */,
+/* 604 */,
+/* 605 */,
+/* 606 */,
+/* 607 */,
+/* 608 */,
+/* 609 */,
+/* 610 */,
+/* 611 */,
+/* 612 */,
+/* 613 */,
+/* 614 */,
+/* 615 */,
+/* 616 */,
+/* 617 */,
+/* 618 */,
+/* 619 */,
+/* 620 */,
+/* 621 */,
+/* 622 */,
+/* 623 */,
+/* 624 */,
+/* 625 */,
+/* 626 */,
+/* 627 */,
+/* 628 */,
+/* 629 */,
+/* 630 */,
+/* 631 */,
+/* 632 */,
+/* 633 */,
+/* 634 */,
+/* 635 */,
+/* 636 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var myMixins = {
+  data: function data() {
+    return {
+      questions: [],
+      selectedQuestion: null,
+      choices: [],
+      usedQuestions: [],
+      score: 0,
+      questionNumber: 0
+    };
+  },
+
+  methods: {
+    select: function select(choice) {},
+    getAllQuestions: function getAllQuestions() {},
+    getChoices: function getChoices(object) {}
+  },
+  mounted: function mounted() {
+    this.getAllQuestions();
+  }
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (myMixins);
 
 /***/ })
 /******/ ]);

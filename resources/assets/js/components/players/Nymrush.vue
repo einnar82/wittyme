@@ -84,15 +84,21 @@
 </template>
 
 <script>
+import shuffle from 'shuffle-array'
+import myMixins from '../../mixins'
 export default {
   name: 'Nymrush',
-  data () {
-    return {
-
-    }
-  },
+  mixins: [myMixins],
   methods: {
-    select() {
+    select(choice) {},
+    getAllQuestions () {
+      axios.get('/actions/nymrush')
+        .then(response => {
+          console.log(response);
+        })
+    },
+    getChoices (object) {}, 
+    select(choice) {
       this.$swal('Hello World');
     }
   }

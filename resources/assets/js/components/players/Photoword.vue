@@ -67,20 +67,11 @@
 </template>
 
 <script>
-import axios from 'axios'
 import shuffle from 'shuffle-array'
+import myMixins from '../../mixins'
 export default {
   name:'Photoword',
-  data () {
-    return {
-      questions: [],
-      selectedQuestion: null,
-      choices: [],
-      usedQuestions: [],
-      score: 0,
-      questionNumber: 0
-    }
-  },
+  mixins: [myMixins],
   methods: {
     select(choice) {
       if (this.selectedQuestion.answer == choice) {
@@ -111,9 +102,6 @@ export default {
       }
       shuffle(this.choices)
     } 
-  },
-  mounted () {
-    this.getAllQuestions();
   }
 }
 </script>

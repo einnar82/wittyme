@@ -63193,10 +63193,9 @@ exports.push([module.i, "\n.picture[data-v-83c501aa] {\n  height: 200px;\n  widt
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_shuffle_array__ = __webpack_require__(398);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_shuffle_array___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_shuffle_array__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_shuffle_array__ = __webpack_require__(398);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_shuffle_array___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_shuffle_array__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins__ = __webpack_require__(636);
 //
 //
 //
@@ -63270,17 +63269,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Photoword',
-  data: function data() {
-    return {
-      questions: [],
-      selectedQuestion: null,
-      choices: [],
-      usedQuestions: [],
-      score: 0,
-      questionNumber: 0
-    };
-  },
-
+  mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins__["a" /* default */]],
   methods: {
     select: function select(choice) {
       if (this.selectedQuestion.answer == choice) {
@@ -63295,9 +63284,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     getAllQuestions: function getAllQuestions() {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/questions/photoword').then(function (response) {
+      axios.get('/questions/photoword').then(function (response) {
         _this.questions = response.data;
-        _this.selectedQuestion = __WEBPACK_IMPORTED_MODULE_1_shuffle_array___default.a.pick(_this.questions, { 'picks': 1 });
+        _this.selectedQuestion = __WEBPACK_IMPORTED_MODULE_0_shuffle_array___default.a.pick(_this.questions, { 'picks': 1 });
         _this.questionNumber += 1;
         console.log(_this.selectedQuestion);
         _this.getChoices(_this.selectedQuestion);
@@ -63310,11 +63299,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.choices.push(object[index]);
         }
       }
-      __WEBPACK_IMPORTED_MODULE_1_shuffle_array___default()(this.choices);
+      __WEBPACK_IMPORTED_MODULE_0_shuffle_array___default()(this.choices);
     }
-  },
-  mounted: function mounted() {
-    this.getAllQuestions();
   }
 });
 
@@ -63747,6 +63733,11 @@ exports.push([module.i, "", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_shuffle_array__ = __webpack_require__(398);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_shuffle_array___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_shuffle_array__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins__ = __webpack_require__(636);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -63832,18 +63823,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Nymrush',
-  data: function data() {
-    return {};
-  },
-
-  methods: {
-    select: function select() {
-      this.$swal('Hello World');
-    }
-  }
+  mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins__["a" /* default */]],
+  methods: _defineProperty({
+    select: function select(choice) {},
+    getAllQuestions: function getAllQuestions() {
+      axios.get('/actions/nymrush').then(function (response) {
+        console.log(response);
+      });
+    },
+    getChoices: function getChoices(object) {}
+  }, 'select', function select(choice) {
+    this.$swal('Hello World');
+  })
 });
 
 /***/ }),
@@ -67844,6 +67840,37 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-5383a42c", module.exports)
   }
 }
+
+/***/ }),
+/* 634 */,
+/* 635 */,
+/* 636 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var myMixins = {
+  data: function data() {
+    return {
+      questions: [],
+      selectedQuestion: null,
+      choices: [],
+      usedQuestions: [],
+      score: 0,
+      questionNumber: 0
+    };
+  },
+
+  methods: {
+    select: function select(choice) {},
+    getAllQuestions: function getAllQuestions() {},
+    getChoices: function getChoices(object) {}
+  },
+  mounted: function mounted() {
+    this.getAllQuestions();
+  }
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (myMixins);
 
 /***/ })
 /******/ ]);

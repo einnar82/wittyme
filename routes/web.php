@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', [ 
   'uses' => 'HomeController@home',
   'as' => 'home' 
@@ -74,19 +63,17 @@ Route::post('/register', [
     'as' => 'register'
 ]);
 
-
-Route::post('actions/photoword', 'PhotowordController@add');
-Route::get('actions/photoword', 'PhotowordController@get');
-Route::delete('actions/photoword/{id?}', 'PhotowordController@delete');
-Route::post('actions/photoword/{id?}', 'PhotowordController@update');
+Route::prefix('actions')->group(function () {
+  Route::post('/photoword', 'PhotowordController@add');
+  Route::get('/photoword', 'PhotowordController@get');
+  Route::delete('/photoword/{id?}', 'PhotowordController@delete');
+  Route::post('/photoword/{id?}', 'PhotowordController@update');
+  //fixitup
+  Route::post('/fixitup', 'FixItUpController@store');
+  Route::get('/fixitup', 'FixItUpController@index');
+  Route::delete('/fixitup/{id?}', 'FixItUpController@destroy');
+  Route::put('/fixitup/{id?}', 'FixItUpController@update');
+  //nymrush
+  Route::resource('/nymrush', 'NymrushController');
+});
 Route::get('questions/photoword','PhotowordController@getTenQuestions');
-
-Route::post('actions/fixitup', 'FixItUpController@store');
-Route::get('actions/fixitup', 'FixItUpController@index');
-Route::delete('actions/fixitup/{id?}', 'FixItUpController@destroy');
-Route::put('actions/fixitup/{id?}', 'FixItUpController@update');
-
-
-Route::resources([
-  'actions/nymrush' => 'NymrushController',
-]);
