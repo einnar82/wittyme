@@ -67937,6 +67937,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -67947,7 +67951,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       questions: [],
       selectedQuestion: null,
       choices: [],
-      usedQuestions: []
+      usedQuestions: [],
+      score: 0,
+      questionNumber: 0
     };
   },
 
@@ -67955,6 +67961,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     select: function select(choice) {
       if (this.selectedQuestion.answer == choice) {
         this.$swal('Correct!');
+        this.score = this.score + 1;
         this.getAllQuestions();
       } else {
         this.$swal('Wrong!');
@@ -67967,6 +67974,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/questions/photoword').then(function (response) {
         _this.questions = response.data;
         _this.selectedQuestion = __WEBPACK_IMPORTED_MODULE_1_shuffle_array___default.a.pick(_this.questions, { 'picks': 1 });
+        _this.questionNumber = _this.questionNumber + 1;
         console.log(_this.selectedQuestion);
         _this.getChoices(_this.selectedQuestion);
       });
@@ -67978,7 +67986,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.choices.push(object[index]);
         }
       }
-      console.log(__WEBPACK_IMPORTED_MODULE_1_shuffle_array___default()(this.choices));
     }
   },
   mounted: function mounted() {
@@ -68123,7 +68130,13 @@ var render = function() {
                               staticClass:
                                 "text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1"
                             },
-                            [_vm._v("\n              100\n            ")]
+                            [
+                              _vm._v(
+                                "\n              " +
+                                  _vm._s(_vm.score) +
+                                  "\n            "
+                              )
+                            ]
                           )
                         ]
                       ),
@@ -68149,7 +68162,13 @@ var render = function() {
                               staticClass:
                                 "text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1"
                             },
-                            [_vm._v("\n             1 / 10\n            ")]
+                            [
+                              _vm._v(
+                                "\n             " +
+                                  _vm._s(_vm.questionNumber) +
+                                  " / 10\n            "
+                              )
+                            ]
                           )
                         ]
                       ),

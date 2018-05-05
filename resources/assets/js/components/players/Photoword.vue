@@ -9,7 +9,7 @@
                 Score
               </p>
               <p class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1">
-                100
+                {{score}}
               </p>
             </v-flex>
             <v-flex xs4 sm4 md4 lg4 xl4>
@@ -17,7 +17,7 @@
                Question
               </p>
               <p class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1">
-               1 / 10
+               {{questionNumber}} / 10
               </p>
             </v-flex>
             <v-flex xs4 sm4 md4 lg4 xl4>
@@ -44,7 +44,8 @@
       <v-container fluid=true>
         <v-layout row wrap>
           <v-flex>
-            <div class="picture elevation-1" :style="`background: url('/storage/photoword/${selectedQuestion.image_question}')no-repeat;`"/>
+            <div class="picture elevation-1" 
+                :style="`background: url('/storage/photoword/${selectedQuestion.image_question}')no-repeat;`"/>
           </v-flex>
         </v-layout>
       </v-container>
@@ -54,7 +55,10 @@
                   :key="index">
           <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
             <div class="text-xs-center">
-                <v-btn round color="primary" dark @click="select(choices[index])">{{choices[index]}}</v-btn>
+                <v-btn round 
+                      color="primary" 
+                      dark 
+                      @click="select(choices[index])">{{choices[index]}}</v-btn>
               </div>
           </v-flex>
         </v-layout>
@@ -72,13 +76,16 @@ export default {
       questions: [],
       selectedQuestion: null,
       choices: [],
-      usedQuestions: []
+      usedQuestions: [],
+      score: 0,
+      questionNumber: 0
     }
   },
   methods: {
     select(choice) {
       if (this.selectedQuestion.answer == choice) {
         this.$swal('Correct!');
+        this.score = this.score + 1;
         this.getAllQuestions();
       } else {
         this.$swal('Wrong!');
@@ -90,6 +97,7 @@ export default {
         .then(response => {
           this.questions = response.data
           this.selectedQuestion = shuffle.pick(this.questions, {'picks': 1});
+          this.questionNumber = this.questionNumber + 1;
           console.log(this.selectedQuestion);
            this.getChoices(this.selectedQuestion)
         })
@@ -101,8 +109,6 @@ export default {
             this.choices.push(object[index]);
           }
       }
-      console.log(shuffle(this.choices));
-
     } 
   },
   mounted () {
