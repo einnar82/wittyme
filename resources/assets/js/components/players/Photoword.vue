@@ -78,7 +78,11 @@ export default {
   methods: {
     select(choice) {
       this.$swal('Hello word!');
-      console.log(choice);
+      if (this.selectedQuestion.answer == choice) {
+        console.log('correct');
+      } else {
+        console.log('wrong');
+      }
     },
     getAllQuestions () {
       axios.get('/questions/photoword')

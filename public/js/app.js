@@ -63278,7 +63278,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     select: function select(choice) {
       this.$swal('Hello word!');
-      console.log(choice);
+      if (this.selectedQuestion.answer == choice) {
+        console.log('correct');
+      } else {
+        console.log('wrong');
+      }
     },
     getAllQuestions: function getAllQuestions() {
       var _this = this;
