@@ -32,8 +32,6 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <!-- <div v-for="(question, index) in s"
-          :key="index"> -->
      <v-container fluid=true>
         <v-layout row wrap>
           <v-flex align-center="true">
@@ -51,36 +49,16 @@
         </v-layout>
       </v-container>
       <v-container fluid=true align-center=true>
-        <v-layout row wrap>
+        <v-layout row wrap  
+                  v-for="(choice, index) in choices" 
+                  :key="index">
           <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
             <div class="text-xs-center">
-                <v-btn round color="primary" dark @click="select">{{selectedQuestion.choice1}}</v-btn>
+                <v-btn round color="primary" dark @click="select(choices[index])">{{choices[index]}}</v-btn>
               </div>
           </v-flex>
         </v-layout>
-        <v-layout row wrap>
-          <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
-            <div class="text-xs-center">
-              <v-btn round color="primary" dark @click="select">{{selectedQuestion.choice2}}</v-btn>
-            </div>
-          </v-flex>
-        </v-layout>
-        <v-layout row wrap>
-          <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
-            <div class="text-xs-center">
-              <v-btn round color="primary" dark @click="select">{{selectedQuestion.choice3}}</v-btn>
-            </div>
-          </v-flex>
-        </v-layout>
-        <v-layout row wrap>
-          <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
-            <div class="text-xs-center">
-              <v-btn round color="primary" dark @click="select">{{selectedQuestion.answer}}</v-btn>
-            </div>
-          </v-flex>
-        </v-layout>
       </v-container>
-    <!-- </div> -->
   </div>
 </template>
 
@@ -98,8 +76,9 @@ export default {
     }
   },
   methods: {
-    select() {
+    select(choice) {
       this.$swal('Hello word!');
+      console.log(choice);
     },
     getAllQuestions () {
       axios.get('/questions/photoword')
@@ -116,7 +95,8 @@ export default {
             this.choices.push(object[index]);
           }
       }
-      console.log(this.choices);
+      console.log(shuffle(this.choices));
+
     } 
   },
   mounted () {
