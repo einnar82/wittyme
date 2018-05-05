@@ -99,7 +99,7 @@ export default {
           this.selectedQuestion = shuffle.pick(this.questions, {'picks': 1});
           this.questionNumber += 1;
           console.log(this.selectedQuestion);
-           this.getChoices(this.selectedQuestion)
+          this.getChoices(this.selectedQuestion)
         })
     },
     getChoices (object) {
@@ -109,6 +109,7 @@ export default {
             this.choices.push(object[index]);
           }
       }
+      shuffle(this.choices)
     } 
   },
   mounted () {

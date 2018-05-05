@@ -67986,6 +67986,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           this.choices.push(object[index]);
         }
       }
+      __WEBPACK_IMPORTED_MODULE_1_shuffle_array___default()(this.choices);
     }
   },
   mounted: function mounted() {
