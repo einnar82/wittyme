@@ -85,7 +85,7 @@ export default {
     select(choice) {
       if (this.selectedQuestion.answer == choice) {
         this.$swal('Correct!');
-        this.score = this.score + 1;
+        this.score += 1;
         this.getAllQuestions();
       } else {
         this.$swal('Wrong!');
@@ -97,7 +97,7 @@ export default {
         .then(response => {
           this.questions = response.data
           this.selectedQuestion = shuffle.pick(this.questions, {'picks': 1});
-          this.questionNumber = this.questionNumber + 1;
+          this.questionNumber += 1;
           console.log(this.selectedQuestion);
            this.getChoices(this.selectedQuestion)
         })
