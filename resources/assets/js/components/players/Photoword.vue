@@ -9,7 +9,7 @@
                 Score
               </p>
               <p class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1">
-                100
+                {{score}}
               </p>
             </v-flex>
             <v-flex xs4 sm4 md4 lg4 xl4>
@@ -17,7 +17,7 @@
                Question
               </p>
               <p class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1">
-               1 / 10
+               {{questionNumber}} / 10
               </p>
             </v-flex>
             <v-flex xs4 sm4 md4 lg4 xl4>
@@ -32,8 +32,6 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <div v-for="(question, index) in questions"
-          :key="index">
      <v-container fluid=true>
         <v-layout row wrap>
           <v-flex align-center="true">
@@ -46,67 +44,54 @@
       <v-container fluid=true>
         <v-layout row wrap>
           <v-flex>
-            <div class="picture elevation-1" :style="`background: url('/storage/photoword/${question.image_question}')no-repeat;`"/>
+            <div class="picture elevation-1" 
+                :style="`background: url('/storage/photoword/${selectedQuestion.image_question}')no-repeat;`"/>
           </v-flex>
         </v-layout>
       </v-container>
       <v-container fluid=true align-center=true>
-        <v-layout row wrap>
+        <v-layout row wrap  
+                  v-for="(choice, index) in choices" 
+                  :key="index">
           <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
             <div class="text-xs-center">
-                <v-btn round color="primary" dark @click="select">{{question.choice1}}</v-btn>
+                <v-btn round 
+                      color="primary" 
+                      dark 
+                      @click="select(choices[index])">{{choices[index]}}</v-btn>
               </div>
           </v-flex>
         </v-layout>
-        <v-layout row wrap>
-          <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
-            <div class="text-xs-center">
-              <v-btn round color="primary" dark @click="select">{{question.choice2}}</v-btn>
-            </div>
-          </v-flex>
-        </v-layout>
-        <v-layout row wrap>
-          <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
-            <div class="text-xs-center">
-              <v-btn round color="primary" dark @click="select">{{question.choice3}}</v-btn>
-            </div>
-          </v-flex>
-        </v-layout>
-        <v-layout row wrap>
-          <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
-            <div class="text-xs-center">
-              <v-btn round color="primary" dark @click="select">{{question.answer}}</v-btn>
-            </div>
-          </v-flex>
-        </v-layout>
       </v-container>
-    </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import shuffle from 'shuffle-array'
+import myMixins from '../../mixins'
 export default {
   name:'Photoword',
-  data () {
-    return {
-      questions: []
-    }
-  },
+  mixins: [myMixins],
   methods: {
-    select() {
-      this.$swal('Hello word!');
-    },
     getAllQuestions () {
       axios.get('/questions/photoword')
         .then(response => {
-          this.questions = response.data.data
-          console.log(this.questions);
+          this.questions = response.data
+          this.selectedQuestion = shuffle.pick(this.questions, {'picks': 1});
+          this.questionNumber += 1;
+          console.log(this.selectedQuestion);
+          this.getChoices(this.selectedQuestion)
         })
-    }
-  },
-  mounted () {
-    this.getAllQuestions()
+    },
+    getChoices (object) {
+      this.choices = [];
+      for(let index in object) { 
+          if (index == 'choice1' || index == 'choice2' || index == 'choice3' || index == 'answer') {
+            this.choices.push(object[index]);
+          }
+      }
+      shuffle(this.choices)
+    } 
   }
 }
 </script>

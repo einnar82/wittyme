@@ -9,7 +9,7 @@
                 Score
               </p>
               <p class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1">
-                100
+                {{score}}
               </p>
             </v-flex>
             <v-flex xs4 sm4 md4 lg4 xl4>
@@ -17,7 +17,7 @@
                Question
               </p>
               <p class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1">
-               1 / 10
+               {{questionNumber}} / 10
               </p>
             </v-flex>
             <v-flex xs4 sm4 md4 lg4 xl4>
@@ -45,56 +45,55 @@
       <v-layout row wrap>
         <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
           <p class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1">
-            HANDSOME
+            {{selectedQuestion.synonym}}
           </p>
         </v-flex>
       </v-layout>
     </v-container>
     <v-container fluid=true align-center=true>
-      <v-layout row wrap>
-        <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
-           <div class="text-xs-center">
-              <v-btn round color="primary" dark @click="select">Rounded Button</v-btn>
+      <v-layout row 
+                wrap  
+                v-for="(choice, index) in choices" 
+                :key="index">
+          <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
+            <div class="text-xs-center">
+                  <v-btn round 
+                        color="primary" 
+                        dark 
+                        @click="select(choices[index])">{{choices[index]}}</v-btn>
             </div>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
-          <div class="text-xs-center">
-            <v-btn round color="primary" dark @click="select">Rounded Button</v-btn>
-          </div>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
-          <div class="text-xs-center">
-            <v-btn round color="primary" dark @click="select">Rounded Button</v-btn>
-          </div>
-        </v-flex>
-      </v-layout>
-      <v-layout row wrap>
-        <v-flex xs12 sm12 md12 lg12 xl12 align-center=true>
-          <div class="text-xs-center">
-            <v-btn round color="primary" dark @click="select">Rounded Button</v-btn>
-          </div>
-        </v-flex>
+          </v-flex>
       </v-layout>
     </v-container>
   </div>
 </template>
 
 <script>
+import shuffle from 'shuffle-array'
+import myMixins from '../../mixins'
 export default {
   name: 'Nymrush',
-  data () {
-    return {
-
-    }
-  },
+  mixins: [myMixins],
   methods: {
-    select() {
-      this.$swal('Hello World');
-    }
+    getAllQuestions () {
+      axios.get('/actions/nymrush')
+        .then(response => {
+          this.questions = response.data
+          this.selectedQuestion = shuffle.pick(this.questions, {'picks': 1});
+          this.questionNumber += 1;
+          console.log(this.selectedQuestion);
+          this.getChoices(this.selectedQuestion)
+        })
+    },
+    getChoices (object) {
+      this.choices = [];
+      for(let index in object) { 
+          if (index == 'choice1' || index == 'choice2' || index == 'choice3' || index == 'answer') {
+            this.choices.push(object[index]);
+          }
+      }
+      shuffle(this.choices)
+    }, 
   }
 }
 </script>

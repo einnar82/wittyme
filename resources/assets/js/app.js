@@ -6,7 +6,7 @@
  */
 
 import '../js/bootstrap'
-
+import axios from 'axios'
 import Home from './components/layouts/Home.vue'
 import router from './routes'
 const app = new Vue({

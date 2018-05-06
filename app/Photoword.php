@@ -11,4 +11,9 @@ class Photoword extends Model
     protected $fillable = [
       'image_question', 'choice1','choice2','choice3','answer'
     ];
+
+    protected function scopeTotalCount($query)
+    {
+      return $query->count();
+    }
 }
