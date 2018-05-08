@@ -25,7 +25,7 @@
                 Time
               </p>
               <p class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1">
-                100
+                {{now}}
               </p>
             </v-flex>
           </v-layout>
@@ -80,7 +80,9 @@ export default {
           this.selectedQuestion = shuffle.pick(this.questions, {'picks': 1});
           this.questionNumber += 1;
           console.log(this.selectedQuestion);
+          this.answer = this.selectedQuestion.answer;
           this.getChoices(this.selectedQuestion)
+          this.runTimer();
         })
     },
     getChoices (object) {
