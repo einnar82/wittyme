@@ -23379,6 +23379,8 @@ var myMixins = {
     alertMe: function alertMe(title, text, icon) {
       var _this = this;
 
+      this.now = 0;
+      clearInterval(this.interval);
       this.$swal({
         title: title,
         text: text,
@@ -23392,14 +23394,10 @@ var myMixins = {
     },
     select: function select(choice) {
       if (this.selectedQuestion.answer == choice) {
-        this.now = 0;
         this.score += 1;
         this.alertMe('Nice one!', 'You clicked a correct answer!', 'success');
-        clearInterval(this.interval);
       } else {
-        this.now = 0;
         this.alertMe('Oh noes!', 'This correct answer is ' + this.answer, 'error');
-        clearInterval(this.interval);
       }
     },
     runTimer: function runTimer() {
@@ -23408,16 +23406,12 @@ var myMixins = {
       this.interval = setInterval(function () {
         _this2.now -= 1;
         if (_this2.now == 0) {
-          clearInterval(_this2.interval);
           _this2.alertMe('Time is up!', 'This correct answer is ' + _this2.answer, 'error');
         }
       }, 1000);
     },
     getAllQuestions: function getAllQuestions() {},
     getChoices: function getChoices(object) {}
-  },
-  computed: {
-    timer: function timer() {}
   },
   mounted: function mounted() {
     this.getAllQuestions();
@@ -80413,6 +80407,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.questionNumber += 1;
         console.log(_this.selectedQuestion);
         _this.getChoices(_this.selectedQuestion);
+        _this.runTimer();
       });
     },
     getChoices: function getChoices(object) {
@@ -80539,7 +80534,13 @@ var render = function() {
                               staticClass:
                                 "text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1"
                             },
-                            [_vm._v("\n              100\n            ")]
+                            [
+                              _vm._v(
+                                "\n              " +
+                                  _vm._s(_vm.now) +
+                                  "\n            "
+                              )
+                            ]
                           )
                         ]
                       )
