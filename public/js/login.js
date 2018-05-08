@@ -18747,10 +18747,16 @@ var myMixins = {
         }
       }, 1000);
     },
+    checkToken: function checkToken() {
+      if (localStorage.getItem('token') === null || localStorage.getItem('token') === '') {
+        window.location.href = '/login';
+      }
+    },
     getAllQuestions: function getAllQuestions() {},
     getChoices: function getChoices(object) {}
   },
   mounted: function mounted() {
+    this.checkToken();
     this.getAllQuestions();
   }
 };
@@ -62655,7 +62661,7 @@ exports = module.exports = __webpack_require__(12)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -62691,6 +62697,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Login',
@@ -62699,13 +62714,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   data: function data() {
     return {
-      drawer: null
+      drawer: null,
+      email: '',
+      password: ''
     };
   },
 
   methods: {
     gotoDashboard: function gotoDashboard() {
-      window.location.href = '/dashboard';
+      var _this = this;
+
+      axios.post('/auth/login', {
+        email: this.email,
+        password: this.password
+      }).then(function (response) {
+        console.log(response.data);
+        localStorage.setItem('token', response.data.token);
+        window.location.href = '/dashboard';
+        _this.email = _this.password = '';
+      }).catch(function (error) {
+        _this.$swal({
+          title: 'Oh noes!',
+          text: 'Invalid Username or Password',
+          icon: 'error'
+        });
+      });
     }
   }
 });
@@ -62754,9 +62787,16 @@ var render = function() {
                           _c("v-text-field", {
                             attrs: {
                               "prepend-icon": "person",
-                              name: "login",
-                              label: "Login",
-                              type: "text"
+                              name: "email",
+                              label: "Email Address",
+                              type: "email"
+                            },
+                            model: {
+                              value: _vm.email,
+                              callback: function($$v) {
+                                _vm.email = $$v
+                              },
+                              expression: "email"
                             }
                           }),
                           _vm._v(" "),
@@ -62767,6 +62807,13 @@ var render = function() {
                               label: "Password",
                               id: "password",
                               type: "password"
+                            },
+                            model: {
+                              value: _vm.password,
+                              callback: function($$v) {
+                                _vm.password = $$v
+                              },
+                              expression: "password"
                             }
                           })
                         ],
@@ -62912,6 +62959,7 @@ exports.push([module.i, "\n.categories[data-v-e1b63cfa] {\n  width: 300px;\n  ma
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins__ = __webpack_require__(144);
 //
 //
 //
@@ -62985,8 +63033,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Dashboard',
+  mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins__["a" /* default */]],
   data: function data() {
     return {};
   },

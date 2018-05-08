@@ -9,8 +9,17 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field prepend-icon="person" name="login" label="Login" type="text"></v-text-field>
-                  <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password"></v-text-field>
+                  <v-text-field prepend-icon="person" 
+                                name="email" 
+                                label="Email Address" 
+                                type="email"
+                                v-model="email"/>
+                  <v-text-field prepend-icon="lock" 
+                                name="password" 
+                                label="Password" 
+                                id="password" 
+                                type="password"
+                                v-model="password"/>
                 </v-form>
               </v-card-text>
               <v-card-actions>
@@ -31,12 +40,31 @@ export default {
   },
   data () {
     return {
-      drawer: null
+      drawer: null,
+      email: '',
+      password: ''
     }
   },
   methods: {
     gotoDashboard () {
-      window.location.href = '/dashboard';
+
+      axios.post('/auth/login', {
+        email: this.email,
+        password: this.password
+      })
+      .then(response => {
+        console.log(response.data);
+        localStorage.setItem('token', response.data.token);
+        window.location.href = '/dashboard';
+        this.email = this.password = ''
+      })
+      .catch(error => {
+        this.$swal({
+          title: 'Oh noes!',
+          text: 'Invalid Username or Password',
+          icon: 'error',
+        })
+      })
     }
   }
 }

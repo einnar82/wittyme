@@ -45,10 +45,16 @@ const myMixins = {
         } 
       }, 1000)
     },
+    checkToken() {
+      if (localStorage.getItem('token') === null || localStorage.getItem('token') === '') {
+        window.location.href= '/login'
+      }
+    },
     getAllQuestions () {},
     getChoices (object) {} 
   },
   mounted () {
+    this.checkToken();
     this.getAllQuestions();
   }
 }

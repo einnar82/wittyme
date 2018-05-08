@@ -71,8 +71,10 @@
 </template>
 
 <script>
+import myMixins from '../../mixins'
 export default {
   name: 'Dashboard',
+  mixins: [myMixins],
   data () {
     return {
 
