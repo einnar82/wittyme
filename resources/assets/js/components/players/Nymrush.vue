@@ -25,7 +25,7 @@
                 Time
               </p>
               <p class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1">
-                100
+                {{now}}
               </p>
             </v-flex>
           </v-layout>
@@ -83,6 +83,7 @@ export default {
           this.questionNumber += 1;
           console.log(this.selectedQuestion);
           this.getChoices(this.selectedQuestion)
+          this.runTimer();
         })
     },
     getChoices (object) {
