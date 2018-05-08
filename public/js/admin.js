@@ -23386,7 +23386,7 @@ var myMixins = {
         text: text,
         icon: icon
       }).then(function (willClose) {
-        if (willClose) {
+        if (willClose == true || willClose == null) {
           _this.now = 10;
           _this.getAllQuestions();
         }
