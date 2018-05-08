@@ -23359,7 +23359,6 @@ module.exports = Cancel;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
 var myMixins = {
   data: function data() {
     return {
@@ -23371,7 +23370,8 @@ var myMixins = {
       questionNumber: 0,
       interval: null,
       now: 10,
-      answer: null
+      answer: null,
+      typedAnswer: ''
     };
   },
 
@@ -80868,14 +80868,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins__["a" /* default */]],
   methods: {
     checkAnswer: function checkAnswer() {
-      if (this.selectedQuestion.answer == this.answer) {
-        this.score += 1;
-        this.alertMe('Nice one!', 'You typed a correct answer!', 'success');
-        this.answer = '';
-      } else {
-        this.$swal('Wrong!');
-        this.alertMe('Oh noes!', 'This correct answer is ' + this.selectedQuestion.answer, 'error');
-        this.answer = '';
+      if (this.typedAnswer.length !== 0) {
+        if (this.selectedQuestion.answer == this.typedAnswer) {
+          this.score += 1;
+          this.typedAnswer = '';
+          this.alertMe('Nice one!', 'You typed a correct answer!', 'success');
+        } else {
+          this.typedAnswer = '';
+          this.alertMe('Oh noes!', 'This correct answer is ' + this.answer, 'error');
+        }
       }
     },
     getAllQuestions: function getAllQuestions() {
@@ -80885,6 +80886,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.selectedQuestion = __WEBPACK_IMPORTED_MODULE_0_shuffle_array___default.a.pick(response.data, { 'picks': 1 });
         _this.questionNumber += 1;
         console.log(_this.selectedQuestion);
+        _this.answer = _this.selectedQuestion.answer;
         _this.runTimer();
       });
     }
@@ -81139,11 +81141,11 @@ var render = function() {
                       }
                     },
                     model: {
-                      value: _vm.answer,
+                      value: _vm.typedAnswer,
                       callback: function($$v) {
-                        _vm.answer = $$v
+                        _vm.typedAnswer = $$v
                       },
-                      expression: "answer"
+                      expression: "typedAnswer"
                     }
                   })
                 ],

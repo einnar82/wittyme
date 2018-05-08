@@ -1,4 +1,3 @@
-
 const myMixins = {
   data () {
     return {
@@ -10,7 +9,8 @@ const myMixins = {
       questionNumber: 0,
       interval:null,
       now: 10,
-      answer: null
+      answer: null,
+      typedAnswer: ''
     }
   },
   methods: {
