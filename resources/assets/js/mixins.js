@@ -23,7 +23,7 @@ const myMixins = {
         icon: icon,
       })
       .then((willClose) => {
-        if (willClose) {
+        if (willClose == true || willClose == null) {
           this.now = 10
           this.getAllQuestions();
         }
