@@ -57,7 +57,7 @@
           name="answer"
           label="Your answer"
           id="answer"
-          v-model="answer"
+          v-model="typedAnswer"
           @keyup.enter="checkAnswer">
           </v-text-field>
         </v-flex>
@@ -74,14 +74,15 @@ export default {
   mixins: [myMixins],
   methods: {
     checkAnswer () {
-      if (this.selectedQuestion.answer == this.answer) {
-        this.score += 1;
-        this.alertMe('Nice one!', 'You typed a correct answer!', 'success')
-        this.answer = ''
-      } else {
-        this.$swal('Wrong!');
-        this.alertMe('Oh noes!', `This correct answer is ${this.selectedQuestion.answer}`, 'error')
-        this.answer = ''
+      if (this.typedAnswer.length !== 0) {
+       if (this.selectedQuestion.answer == this.typedAnswer) {
+          this.score += 1;
+          this.typedAnswer = ''
+          this.alertMe('Nice one!', 'You typed a correct answer!', 'success')
+        } else {
+          this.typedAnswer = ''
+          this.alertMe('Oh noes!', `This correct answer is ${this.answer}`, 'error')
+        }
       }
     },
     getAllQuestions () {
@@ -90,6 +91,7 @@ export default {
           this.selectedQuestion = shuffle.pick(response.data, {'picks': 1})
           this.questionNumber += 1;
           console.log(this.selectedQuestion);
+          this.answer = this.selectedQuestion.answer
           this.runTimer()
         })
     }
