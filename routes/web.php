@@ -76,4 +76,9 @@ Route::prefix('actions')->group(function () {
   //nymrush
   Route::resource('/nymrush', 'NymrushController');
 });
+
+Route::prefix('auth')->group(function () { 
+  Route::post('/login', 'AuthController@login');
+});
+
 Route::get('questions/photoword','PhotowordController@getTenQuestions');
