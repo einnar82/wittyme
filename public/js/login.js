@@ -64008,6 +64008,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.selectedQuestion = __WEBPACK_IMPORTED_MODULE_0_shuffle_array___default.a.pick(_this.questions, { 'picks': 1 });
         _this.questionNumber += 1;
         console.log(_this.selectedQuestion);
+        _this.answer = _this.selectedQuestion.answer;
         _this.getChoices(_this.selectedQuestion);
         _this.runTimer();
       });
@@ -64392,6 +64393,7 @@ exports.push([module.i, "", ""]);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_shuffle_array__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_shuffle_array___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_shuffle_array__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins__ = __webpack_require__(144);
 //
 //
 //
@@ -64460,29 +64462,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'FixItUp',
-  data: function data() {
-    return {
-      answer: null,
-      selectedQuestion: null,
-      questionNumber: 0,
-      score: 0
-    };
-  },
-
+  mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins__["a" /* default */]],
   methods: {
     checkAnswer: function checkAnswer() {
       if (this.selectedQuestion.answer == this.answer) {
-        this.$swal('Correct');
         this.score += 1;
-        this.getAllQuestions();
+        this.alertMe('Nice one!', 'You typed a correct answer!', 'success');
         this.answer = '';
       } else {
         this.$swal('Wrong!');
-        this.getAllQuestions();
+        this.alertMe('Oh noes!', 'This correct answer is ' + this.selectedQuestion.answer, 'error');
         this.answer = '';
       }
     },
@@ -64493,12 +64487,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.selectedQuestion = __WEBPACK_IMPORTED_MODULE_0_shuffle_array___default.a.pick(response.data, { 'picks': 1 });
         _this.questionNumber += 1;
         console.log(_this.selectedQuestion);
+        _this.runTimer();
       });
-    },
-    select: function select() {}
-  },
-  mounted: function mounted() {
-    this.getAllQuestions();
+    }
   }
 });
 
@@ -64614,7 +64605,13 @@ var render = function() {
                               staticClass:
                                 "text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1"
                             },
-                            [_vm._v("\n              100\n            ")]
+                            [
+                              _vm._v(
+                                "\n              " +
+                                  _vm._s(_vm.now) +
+                                  "\n            "
+                              )
+                            ]
                           )
                         ]
                       )

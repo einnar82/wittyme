@@ -82,6 +82,7 @@ export default {
           this.selectedQuestion = shuffle.pick(this.questions, {'picks': 1});
           this.questionNumber += 1;
           console.log(this.selectedQuestion);
+          this.answer = this.selectedQuestion.answer;
           this.getChoices(this.selectedQuestion)
           this.runTimer();
         })

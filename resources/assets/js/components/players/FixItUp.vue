@@ -25,7 +25,7 @@
                 Time
               </p>
               <p class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center display-1">
-                100
+                {{now}}
               </p>
             </v-flex>
           </v-layout>
@@ -68,26 +68,19 @@
 
 <script>
 import shuffle from 'shuffle-array'
+import myMixins from '../../mixins'
 export default {
   name: 'FixItUp',
-  data () {
-    return {
-      answer: null,
-      selectedQuestion: null,
-      questionNumber: 0,
-      score: 0
-    }
-  },
+  mixins: [myMixins],
   methods: {
     checkAnswer () {
       if (this.selectedQuestion.answer == this.answer) {
-        this.$swal('Correct');
         this.score += 1;
-        this.getAllQuestions();
+        this.alertMe('Nice one!', 'You typed a correct answer!', 'success')
         this.answer = ''
       } else {
         this.$swal('Wrong!');
-        this.getAllQuestions();
+        this.alertMe('Oh noes!', `This correct answer is ${this.selectedQuestion.answer}`, 'error')
         this.answer = ''
       }
     },
@@ -97,15 +90,10 @@ export default {
           this.selectedQuestion = shuffle.pick(response.data, {'picks': 1})
           this.questionNumber += 1;
           console.log(this.selectedQuestion);
+          this.runTimer()
         })
-    },
-    select() {
-      
     }
   },
-  mounted () {
-    this.getAllQuestions();
-  }
 }
 </script>
 
